@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Platform, ionicBootstrap} from 'ionic-angular';
+import {Platform, ionicBootstrap, MenuController} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {HomePage} from './pages/home/home';
 import {MenuTestPage} from './pages/menu-test/menu-test';
@@ -12,7 +12,7 @@ export class MyApp {
   pages: Array<{component: any, title: string, icon: string}>;
   rootPage: any = HomePage;
 
-  constructor(platform: Platform) {
+  constructor(platform: Platform, private menuCtrl: MenuController) {
     this.pages = [
      {component: HomePage, title: 'Home', icon: 'home'},
      {component: MenuTestPage, title: 'Teste', icon: 'star'}
@@ -24,8 +24,11 @@ export class MyApp {
       StatusBar.styleDefault();
     });
   }
-  openPage(page: any) : void {
+  openPage(page: any, menuSide: string) : void {
      this.rootPage = page.component;
+     this.menuCtrl.close(menuSide);
+
+     console.log('lado: '+menuSide);
   }
   clicou() : void {
    console.log('clicou');
@@ -33,4 +36,10 @@ export class MyApp {
   }
 }
 
-ionicBootstrap(MyApp);
+ionicBootstrap(MyApp,[],{
+ menuType: 'push',
+ plataforms: {
+  ios: {
+   menuType: 'overlay'
+ }}
+});
