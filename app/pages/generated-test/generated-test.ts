@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {ConnectionService} from './../../providers/connection-service/connection-service';
+import {Lowercase } from './../../pipes/lowercase';
 
 @Component({
   templateUrl: 'build/pages/generated-test/generated-test.html',
+  pipes: [Lowercase]
 })
 export class GeneratedTestPage {
   constructor(private nav: NavController, private connectionService: ConnectionService) {}
