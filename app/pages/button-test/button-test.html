@@ -1,0 +1,44 @@
+<ion-navbar *navbar>
+  <button menuToggle>
+   <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <ion-title>Button Page</ion-title>
+
+  <ion-buttons right>
+   <button menuToggle="right">
+    <ion-icon name="menu"></ion-icon>
+   </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content padding class="button-test">
+  <p>Testando Botões: </p>
+  <button secondary block>Botao Ionic</button>
+  <button danger    block>Botao danger</button>
+  <button danger    block outline>Botao danger</button>
+  <button light     block>Botao light</button>
+  <button dark      block>Botao dark</button>
+  <button favorite  block>Botao favorite</button>
+  <button secondary clear>Sem Estilo</button>
+  <BR><br><br><br>
+  <button dark round block>Botao Arredonda</button>
+  <button secondary full>Botao Full</button>
+  <button secondary large>Botao Large</button>
+  <button secondary small>Botao Small</button>
+  <button danger    block><ion-icon name="home"></ion-icon>Botao Icone </button>
+  <button light small block><ion-icon name="home"></ion-icon>Botao Icone </button>
+  <br><br>
+  <button fab danger fab-bottom fab-right large><ion-icon name="star"></ion-icon></button>
+
+
+  <!--
+  opcoes (em theme/app.variables.css)
+  primary:    #387ef5,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+  favorite:   #69BB7B
+  -->
+</ion-content>
