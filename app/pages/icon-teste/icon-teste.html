@@ -1,0 +1,27 @@
+<ion-navbar *navbar>
+  <button menuToggle>
+   <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <ion-title>Icon Page</ion-title>
+
+  <ion-buttons right>
+   <button menuToggle="right">
+    <ion-icon name="menu"></ion-icon>
+   </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content padding class="icon-teste">
+  <p>Icon Page</p>
+
+  <ion-icon name="home" large></ion-icon>
+  <ion-icon name="star" large danger></ion-icon>
+
+  <!-- https://ionicframework.com/docs/v2/ionicons/ -->
+  <br>
+  <ion-row>
+   <ion-col> <ion-icon name="heart" large secundary></ion-icon>                   </ion-col> <!-- active -->
+   <ion-col> <ion-icon name="heart" large isActive="false"></ion-icon>  </ion-col><!-- inactive -->
+  </ion-row>
+</ion-content>

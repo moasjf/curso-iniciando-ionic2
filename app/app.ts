@@ -8,6 +8,8 @@ import {GeneratedTestPage} from './pages/generated-test/generated-test';
 import {AlertPage} from './pages/alert/alert';
 import {ButtonTestPage} from './pages/button-test/button-test';
 import {CardTestePage} from './pages/card-teste/card-teste';
+import {IconTestePage} from './pages/icon-teste/icon-teste';
+import {InputTestPage} from './pages/input-test/input-test';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -23,7 +25,9 @@ export class MyApp {
      {component: GeneratedTestPage, title: 'Gerada', icon: 'cafe'},
      {component: AlertPage, title: 'Alerta', icon: 'bulb'},
      {component: ButtonTestPage, title: 'Button', icon: 'bicycle'},
-     {component: CardTestePage, title: 'Card', icon: 'beer'}
+     {component: CardTestePage, title: 'Card', icon: 'beer'},
+     {component: IconTestePage, title: 'Icon', icon: 'cloud'},
+     {component: InputTestPage, title: 'Input', icon: 'closed-captioning'}
     ];
 
     platform.ready().then(() => {
