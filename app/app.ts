@@ -12,6 +12,7 @@ import {IconTestePage} from './pages/icon-teste/icon-teste';
 import {InputTestPage} from './pages/input-test/input-test';
 import {ListTestPage} from './pages/list-test/list-test';
 import {GridTestPage} from './pages/grid-test/grid-test';
+import {ModalTestPage} from './pages/modal-test/modal-test';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -22,6 +23,7 @@ export class MyApp {
 
   constructor(platform: Platform, private menuCtrl: MenuController) {
     this.pages = [
+     {component: ModalTestPage, title: 'Modal', icon: 'albums'},
      {component: HomePage, title: 'Home', icon: 'hand'},
      {component: MenuTestPage, title: 'Teste', icon: 'clipboard'},
      {component: GeneratedTestPage, title: 'Gerada', icon: 'cafe'},

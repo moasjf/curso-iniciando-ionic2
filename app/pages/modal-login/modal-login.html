@@ -1,0 +1,29 @@
+<ion-navbar *navbar>
+  <ion-title>Modal Login</ion-title>
+  <ion-buttons end>
+    <button (click)="closeModal()"
+    > <ion-icon name="close"></ion-icon></button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content padding class="modal-login">
+
+  <ion-list>
+   <ion-item>
+     <ion-label floating>Login</ion-label>
+     <ion-input name="login" type="text"  [(ngModel)]="user.login"></ion-input>
+   </ion-item>
+
+   <ion-item>
+     <ion-label stacked>SEnha</ion-label>
+     <ion-input name="senha" type="password" [(ngModel)]="user.pass"></ion-input>
+   </ion-item>
+  </ion-list>
+
+  <button block (click)="logar()">Entrar</button>
+
+  <p>Funcionamento 2wayDataBind:</p>
+  <p>Login {{ user.login }}</p>
+  <p>Senha {{ user.pass }}</p>
+
+</ion-content>
