@@ -1,0 +1,86 @@
+<ion-navbar *navbar>
+  <button menuToggle>
+   <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <ion-title>List Page</ion-title>
+
+  <ion-buttons right>
+   <button menuToggle="right">
+    <ion-icon name="menu"></ion-icon>
+   </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content padding class="list-test">
+
+  <ion-list inset>
+    <ion-list-header> Séries de TV </ion-list-header>
+
+    <ion-item-group>
+      <ion-item-divider color="light">Got divisor</ion-item-divider>
+      <ion-item *ngFor="let p of personagens"> {{ p }} </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider color="secundary">Outro Grupo</ion-item-divider>
+      <ion-item *ngFor="let p of personagens">
+        <ion-icon name="leaf" item-left></ion-icon>
+          {{ p }}
+        <ion-icon name="rose" item-right></ion-icon>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider color="secundary">Multi-lines</ion-item-divider>
+      <ion-item *ngFor="let p of personagens" >
+        <ion-avatar item-left>
+          <img src="./../../images/testeAvatar.jpg">
+        </ion-avatar>
+        <h2>Finn</h2>
+        <h3>Don't Know What To Do!</h3>
+        <p>I've had a pretty messed up day. If we just...</p>
+      </ion-item>
+     </ion-item-group>
+
+     <ion-item-group>
+       <ion-item-divider color="secundary">Rolavel direita/esquerda</ion-item-divider>
+       <ion-item-sliding *ngFor="let p of personagens" >
+         <ion-item>
+           <ion-avatar item-left>
+             <img src="./../../images/testeAvatar.jpg">
+           </ion-avatar>
+           <h2>{{p}}</h2>
+         </ion-item>
+         <ion-item-options side="left">
+           <button ion-button color="primary">
+             <ion-icon name="text"></ion-icon>Text
+           </button>
+           <button ion-button color="secondary">
+             <ion-icon name="call"></ion-icon>Call
+           </button>
+         </ion-item-options>
+         <ion-item-options side="right">
+           <button ion-button color="primary">
+             <ion-icon name="mail"></ion-icon>Email
+           </button>
+         </ion-item-options>
+       </ion-item-sliding>
+     </ion-item-group>
+
+     <ion-item-group>
+       <ion-item-divider color="secundary">Thumbs</ion-item-divider>
+       <ion-item *ngFor="let p of personagens">
+         <ion-thumbnail item-left>
+           <img src="./../../images/testeAvatar.jpg">
+         </ion-thumbnail>
+         <h2>My {{p}}</h2>
+         <p>Hayao Miyazaki • 1988</p>
+         <button clear item-right>View</button>
+       </ion-item>
+     </ion-item-group>
+  </ion-list>
+
+
+
+</ion-content>

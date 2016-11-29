@@ -10,6 +10,7 @@ import {ButtonTestPage} from './pages/button-test/button-test';
 import {CardTestePage} from './pages/card-teste/card-teste';
 import {IconTestePage} from './pages/icon-teste/icon-teste';
 import {InputTestPage} from './pages/input-test/input-test';
+import {ListTestPage} from './pages/list-test/list-test';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -27,7 +28,8 @@ export class MyApp {
      {component: ButtonTestPage, title: 'Button', icon: 'bicycle'},
      {component: CardTestePage, title: 'Card', icon: 'beer'},
      {component: IconTestePage, title: 'Icon', icon: 'cloud'},
-     {component: InputTestPage, title: 'Input', icon: 'closed-captioning'}
+     {component: InputTestPage, title: 'Input', icon: 'closed-captioning'},
+     {component: ListTestPage, title: 'List', icon: 'list-box'}
     ];
 
     platform.ready().then(() => {
