@@ -1,0 +1,46 @@
+<ion-navbar *navbar>
+ <button menuToggle>
+  <ion-icon name="menu"></ion-icon>
+ </button>
+
+  <ion-title>ToolBar Page</ion-title>
+
+  <ion-buttons right>
+   <button (click)="toogleBusca()" >
+    <ion-icon name="search"></ion-icon>
+   </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-toolbar light *ngIf="exibirBusca">
+  <ion-searchbar [(ngModel)]="procurar"></ion-searchbar>
+</ion-toolbar>
+
+<ion-toolbar>
+ <ion-segment [(ngModel)]="selecionado">
+   <ion-segment-button value="novo"    >Novos</ion-segment-button>
+   <ion-segment-button value="noticias">Noticias</ion-segment-button>
+ </ion-segment>
+</ion-toolbar>
+
+<ion-content padding class="toolbar-test">
+ <div [ngSwitch]="selecionado">
+   <ion-list *ngSwitchWhen="'novo'"> <!-- tem aspas simples porque estou buscando a string novo e nao um objeto novo -->
+      <ion-item>Novo 1</ion-item>
+      <ion-item>Novo 1</ion-item>
+   </ion-list>
+
+   <ion-list *ngSwitchWhen="'noticias'"> <!-- tem aspas simples porque estou buscando a string novo e nao um objeto novo -->
+      <ion-item>Noticias 1</ion-item>
+      <ion-item>Noticias 1</ion-item>
+   </ion-list>
+ </div>
+</ion-content>
+
+<ion-toolbar danger position="bottom">
+  <ion-title>Footer</ion-title>
+
+  <button menuToggle end>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+</ion-toolbar>

@@ -15,6 +15,7 @@ import {GridTestPage} from './pages/grid-test/grid-test';
 import {ModalTestPage} from './pages/modal-test/modal-test';
 import {NavigationTestPage} from './pages/navigation-test/navigation-test';
 import {TabTestPage} from './pages/tab-test/tab-test';
+import {ToolbarTestPage} from './pages/toolbar-test/toolbar-test';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -25,6 +26,7 @@ export class MyApp {
 
   constructor(platform: Platform, private menuCtrl: MenuController) {
     this.pages = [
+     {component: ToolbarTestPage, title: 'ToolBar', icon: 'archive'},
      {component: TabTestPage, title: 'Tab', icon: 'archive'},
      {component: NavigationTestPage, title: 'Navigation', icon: 'compass'},
      {component: ModalTestPage, title: 'Modal', icon: 'albums'},
