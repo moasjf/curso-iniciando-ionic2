@@ -1,0 +1,19 @@
+<ion-navbar *navbar>
+  <!-- button menuToggle>
+   <ion-icon name="menu"></ion-icon>
+  </button -->
+
+  <ion-title>Abas Page</ion-title>
+
+  <ion-buttons right>
+   <button menuToggle="right">
+    <ion-icon name="menu"></ion-icon>
+   </button>
+  </ion-buttons>
+</ion-navbar>
+
+<!-- se deixar a tag content fica um espaçamento entre titulo da pagina e as abas -->
+<ion-tabs>
+  <ion-tab tabIcon="home"     tabTitle="" [root]="homePage" tabBadge="5" tabBadgeStyle="danger"></ion-tab>
+  <ion-tab tabIcon="contacts" tabTitle="" [root]="contatosPage"></ion-tab>
+</ion-tabs>
