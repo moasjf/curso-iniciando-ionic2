@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Descontos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+<p>Aqui vem os cards</p>
+<button ion-button block (click)="pegaDescontos()">Pegar dados</button>
+<p>saida:</p>
+<p>{{saida}}</p>
+<p *ngFor="let c of listaCards">{{ c.id_desc }}. {{ c.nome_resumo }}</p>
+</ion-content>

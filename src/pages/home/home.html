@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Welcome to Ionic!</h2>
+  <p>
+    This starter project comes with simple tabs-based layout for apps
+    that are going to primarily use a Tabbed UI.
+  </p>
+  <p>
+    Take a look at the <code>src/pages/</code> directory to add or change tabs,
+    update any existing page or create new pages.
+  </p>
+
+  <button ion-button block (click)="testaPegaDados()">Pegar dados</button>
+
+ <button ion-button block (click)="toggleAba()" large outline icon-left color="danger">
+  <ion-icon name="home"></ion-icon> Oculta/exib Abas</button>
+
+  <button ion-button (click)="adicionar()">Add</button>
+
+  <button ion-button (click)="listarPessoasDOIS()">Listar 2</button>
+  <button ion-button (click)="apagaBanco()" color="danger"  >Apaga Banco</button>
+  <button ion-button (click)="criaBanco()" color="secundary">Cria Banco</button>
+
+ <p>Saida:</p>
+ <p>{{ saida }}</p>
+
+ <p *ngFor="let p of respostas">{{p.key}}-{{p.firstname}} {{p.lastname}}</p>
+</ion-content>
