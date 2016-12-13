@@ -8,7 +8,13 @@
 <ion-content padding>
 <p>Aqui vem os cards</p>
 <button ion-button block (click)="pegaDescontos()">Pegar dados</button>
+
+<button ion-button (click)="testePontoInicial()">Ponto Inicial</button>
+<button ion-button (click)="testeAtualizaMaiorId()">At. Maior Id</button>
+<button ion-button (click)="listarCards()">listarCards</button>
+
+
 <p>saida:</p>
+<p *ngFor="let c of listaCards">{{ c.id_desc }}. {{ c.nome_resumo }} <a (click)="testeRemove(c.id)"> Excluir [{{c.id}}] </a> </p>
 <p>{{saida}}</p>
-<p *ngFor="let c of listaCards">{{ c.id_desc }}. {{ c.nome_resumo }}</p>
 </ion-content>
