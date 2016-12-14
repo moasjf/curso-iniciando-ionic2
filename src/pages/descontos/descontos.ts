@@ -1,23 +1,58 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import {Cards} from './../../providers/cards';
+import { NavController, LoadingController } from 'ionic-angular';
+import { Cards} from './../../providers/cards';
+import { DescDetalhesPage  } from './../desc-detalhes/desc-detalhes';
 
 @Component({
   selector: 'page-descontos',
-  templateUrl: 'descontos.html',
-  providers: [Cards]
+  templateUrl: 'descontos.html'
 })
 export class DescontosPage {
-  listaCards: Array<Object>;
+  listaCards: Array<Object> = [];
   saida: string;
+  loading: any;
 
-  constructor(public navCtrl: NavController, public cards: Cards) {
-    this.listaCards = [];
-    //this.cards.iniciaCards();
+  constructor(public navCtrl: NavController, public cards: Cards, public loadingCtrl: LoadingController) {
+    //this.listaCards = [];
+    //this.listarCards();
+    this.loading = this.loadingCtrl.create({
+          		content: 'Fetching content...'      	});
+
+            console.log('Constructor: agora vai');
+            /*
+     this.cards.retorna().then((data) => {
+        console.log('Constructor: iniciando busca cards');
+        console.log("listarCards tam: ", data.rows.length );
+        this.listaCards = [];
+
+        for(var i = 0; i < data.rows.length; i++) {
+            console.log(".."+data.rows.item(i).id_desc+": "+data.rows.item(i).nome_resumo);
+            this.listaCards.push({id: data.rows.item(i).id, id_desc: data.rows.item(i).id_desc, nome_resumo: data.rows.item(i).nome_resumo, categoria: data.rows.item(i).categoria});
+            //di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes
+        }
+
+        console.log("listaCards: ", JSON.stringify(this.listaCards) );
+        //this.loading.dismiss();
+     }, (error) => {
+           console.log('Error', error.err);
+           //this.displayToast('Full of errors', 5000);
+     }); */
+
+     //this.listarCards();
   }
 
   ionViewDidLoad() {
     console.log('Pag Desconto: iniciando');
+    this.listarCards();
+    this.cards.atualizaMaiorId();
+  }
+
+
+  abrirDetalhes(objADO){
+     console.log('TO CHEGANDO AQUI');
+     this.navCtrl.push(DescDetalhesPage,{
+       mensagem: 'Mensagem passada por NavigationTestPage', cardDetalhe: objADO
+     })
   }
 
   testePontoInicial(){
@@ -27,8 +62,9 @@ export class DescontosPage {
 
   testeAtualizaMaiorId(){
     this.cards.atualizaMaiorId();
-    let num = this.cards.pegaMaiorId()
+    let num = this.cards.pegaMaiorId();
     this.saida = num.toString();
+    //this.cards.pegaMaiorId().then();
   }
 
   testeRemove(idTR){
@@ -37,6 +73,8 @@ export class DescontosPage {
   }
 
   listarCards(){
+    this.loading.present();
+    console.log("listarCards : chamei a funcao" );
     this.cards.retorna().then((data) => {
        //console.log('listarPessoasDOIS saida: ',data);
        console.log("listarCards tam: ", data.rows.length );
@@ -49,6 +87,7 @@ export class DescontosPage {
        }
 
        console.log("listaCards: ", JSON.stringify(this.listaCards) );
+       this.loading.dismiss();
     }, (error) => {
           console.log('Error', error.err);
           //this.displayToast('Full of errors', 5000);
@@ -57,6 +96,7 @@ export class DescontosPage {
 
 
   pegaDescontos(){
+    this.loading.present();
     this.cards.buscaAtualizacoes('2')
      .then( (res) => {
         let json = res.json();
@@ -75,6 +115,7 @@ export class DescontosPage {
         console.log(JSON.stringify(json));
 
         this.saida = JSON.stringify(json);
+        this.loading.dismiss();
      }).catch( (err) => {
         console.log('erro: ' + err);
      });

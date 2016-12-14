@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Detalhes Card</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <p>Saida 2 (nome_resumo): {{ saida2 }}</p>
+
+  <button ion-button (click)="voltar()">Voltar</button>
+
+  <p>id: <b>{{id}}</b></p>
+  <p>id_desc: <b>{{id_desc}}</b></p>
+  <p>categoria: <b>{{categoria}}</b></p>
+  <p>nome_resumo: <b>{{nome_resumo}}</b></p>
+  <p>nome_completo: <b>{{nome_completo}}</b></p>
+  <p>data_hoje: <b>{{data_hoje}}</b></p>
+  <p>validade: <b>{{validade}}</b></p>
+  <p>contato: <b>{{contato}}</b></p>
+  <p>local_cidade: <b>{{local_cidade}}</b></p>
+  <p>local_detalhes: <b>{{local_detalhes}}</b></p>
+  <p>observacoes: <b>{{observacoes}}</b></p>
+  <p>coordenadas: <b>{{coordenadas}}</b></p>
+
+  <p>Saida  (id_desc): {{ saida }}</p>
+  <br><br><br><br>
+  ...
+  <br><br><br><br>
+  ...
+  <p>Saida  (id_desc): {{ saida }}</p>
+
+  <ion-footer>
+    <ion-toolbar no-border-bottom>
+      <ion-buttons left>
+        <button ion-button icon-left color="secundary" (click)="voltar()" >
+          <ion-icon name="arrow-round-back"></ion-icon>
+          Voltar
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

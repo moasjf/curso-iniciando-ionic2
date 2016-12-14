@@ -8,7 +8,7 @@ export class BaseDados {
  people: Array<Object>;
 
  constructor(){
-   this.db.openDatabase({
+   /* this.db.openDatabase({
        name: "meu10conto.db",
        location: "default"
    }).then(() => {
@@ -19,7 +19,7 @@ export class BaseDados {
        })
    }, (error) => {
        console.error("Unable to open db", error);
-   });
+   }); */
  }
 
  abrirBanco(){

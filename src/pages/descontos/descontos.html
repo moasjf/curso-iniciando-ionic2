@@ -15,6 +15,16 @@
 
 
 <p>saida:</p>
-<p *ngFor="let c of listaCards">{{ c.id_desc }}. {{ c.nome_resumo }} <a (click)="testeRemove(c.id)"> Excluir [{{c.id}}] </a> </p>
+ <p *ngFor="let c of listaCards">{{ c.id }}. {{ c.nome_resumo }}&nbsp;&nbsp;&nbsp;
+   <!-- a (click)="abrirDetalhes(c)"> ABRIR </a>&nbsp;&nbsp;&nbsp;&nbsp;
+   <a (click)="testeRemove(c.id)"> Excluir [{{c.id}}] </a -->
+   <button ion-button (click)="abrirDetalhes(c)">Abrir {{ c.id }}</button>&nbsp;
+   <button ion-button (click)="testeRemove(c.id)" color="danger">Excluir {{ c.id }}</button>
+ </p>
+
+ <!-- button ion-button (click)="abrirDetalhes(c)">Abrir {{ c.id }}</button>
+ <button ion-button (click)="testeRemove(c.id)">Excluir {{ c.id }}</button -->
+ <!--a (click)="abrirDetalhes(c)"> ABRIR </a -->
+ <!-- a (click)="testeRemove(c.id)"> Excluir [{{c.id}}] </a -->
 <p>{{saida}}</p>
 </ion-content>

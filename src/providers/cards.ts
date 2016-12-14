@@ -8,7 +8,8 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class Cards {
   db = new SQLite();
-  maiorId: number;
+  maiorId: number = 0;
+  msg: string = 'o provider está visivel aqui';
 
   constructor(public http: Http) {
      console.log('CARDS: iniciando o provider');
@@ -23,6 +24,7 @@ export class Cards {
   }
 
   iniciaCards(){
+     console.log("CARDS iniciaCards()");
      this.db.openDatabase({
          name: "meu10conto.db",
          location: "default"
@@ -34,7 +36,9 @@ export class Cards {
   }
 
   public atualizaMaiorId() {
-       this.db.executeSql("SELECT MAX(id_desc) AS ult FROM cards", []).then((data) => {
+       console.log("CARDS atualizaMaiorId(): tentei rodar. maiorId=" + this.maiorId);
+       //this.db.executeSql("SELECT MAX(id_desc) AS ult FROM cards", []).then((data) => {
+       this.db.executeSql("SELECT MAX(id) AS ult FROM cards", []).then((data) => {
            if(data.rows.length > 0) { this.maiorId = data.rows.item(0).ult;
            }else{                     this.maiorId = 0;   }
            console.log("CARDS atualizaMaiorId(): maiorId=" + this.maiorId);
@@ -51,6 +55,7 @@ export class Cards {
     console.log("CARDS: tentei REMOVER: " + idR );
      this.db.executeSql("DELETE FROM cards WHERE id = ? ", [idR]).then((data) => {
                      console.log("CARDS: REMOVI: "  + idR);
+                     this.atualizaMaiorId();
      }, (error) => { console.log("CARDS: ERROR: " + JSON.stringify(error.err));
      });
   }
@@ -59,12 +64,14 @@ export class Cards {
     console.log("CARDS: tentei INSERIR: " + JSON.stringify(di) );
      this.db.executeSql("INSERT INTO cards (id_desc, categoria, nome_resumo, nome_completo, data_hoje, validade, contato, local_cidade, local_detalhes, observacoes, coordenadas, img_card, img_detalhes) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?)", [di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes]).then((data) => {
          console.log("CARDS: INSERIU: " + JSON.stringify(data));
+         this.atualizaMaiorId();
      }, (error) => {
          console.log("CARDS: ERROR: " + JSON.stringify(error.err));
      });
   }
 
   public retorna(){
+       console.log("CARDS: foi chamado funcao retorna() ");
       return this.db.executeSql("SELECT * FROM cards", []);
   }
 

@@ -7,22 +7,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-left></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
-  <button ion-button (click)="add()">Add</button>
-  <button ion-button (click)="listar()">Listar</button>
-
+  <p>Provider msg: {{cards.msg}}</p>
+  <p>Provider maiorID: {{cards.maiorId}}</p>
   <p>saida: {{ saida }}</p>
+
+
   <ion-list>
     <ion-list-header>Registros</ion-list-header>
-    <ion-item *ngFor="let p of respostas">
-      <ion-icon name="ionic" item-left></ion-icon>
-      {{p.key}}-{{p.value}}
+    <ion-item *ngFor="let p of listaCards" (click)="abrirDetalhes(p)" >
+      <ion-icon name="card" item-left></ion-icon>
+      id={{p.id}} id_desc= {{p.id_desc}}- {{p.nome_resumo}}
+      <ion-icon name="search"  item-right (click)="abrirDetalhes(p)"                ></ion-icon>
+      <ion-icon name="trash"   item-right (click)="testeRemove(p.id)" color="danger"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>

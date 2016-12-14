@@ -1,56 +1,84 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {Sql} from './../../providers/sql';
+import { Cards} from './../../providers/cards';
+import { DescDetalhesPage  } from './../desc-detalhes/desc-detalhes';
 
 @Component({
   selector: 'page-contact',
-  templateUrl: 'contact.html',
-  providers: [Sql]
+  templateUrl: 'contact.html'
 })
 export class ContactPage {
-  //baseDados: Sql;
+  listaCards: Array<Object> = [];  //,  providers: [Cards]
   saida: string;
   respostas: Array<Object>;
 
-  constructor(public navCtrl: NavController, public baseDados: Sql) {
-    this.respostas = [];
+  constructor(public navCtrl: NavController, public cards: Cards) {
+    this.cards.retorna().then((data) => {
+       console.log('Constructor: iniciando busca cards');
+       console.log("listarCards tam: ", data.rows.length );
+       this.listaCards = [];
+
+       for(var i = 0; i < data.rows.length; i++) {
+           console.log(".."+data.rows.item(i).id_desc+": "+data.rows.item(i).nome_resumo);
+           this.listaCards.push({id: data.rows.item(i).id, id_desc: data.rows.item(i).id_desc, nome_resumo: data.rows.item(i).nome_resumo, categoria: data.rows.item(i).categoria});
+           //di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes
+       }
+
+       console.log("listaCards: ", JSON.stringify(this.listaCards) );
+       //this.loading.dismiss();
+    }, (error) => {
+          console.log('Error', error.err);
+          //this.displayToast('Full of errors', 5000);
+    });
   }
 
-  add(){
-     this.baseDados.set('1','um');
-     this.baseDados.set('2','dois');
-     this.baseDados.set('3','dois');
+  ionViewDidLoad() {
+    console.log('Contact Page: iniciando');
+    this.cards.atualizaMaiorId();
   }
 
-  listar(){
-     /* this.baseDados.getJson('1').then((data) => {
-            this.saida = data;
-            //if(data.rows.length > 0) {
-            //    for(var i = 0; i < data.rows.length; i++) {
-            //        this.people.push({firstname: data.rows.item(i).firstname, lastname: data.rows.item(i).lastname});
-            //    }
-            //}
-        }, (error) => {
-            console.log("ERROR: " + JSON.stringify(error));
-        }); */
+    abrirDetalhes(objADO){
+       console.log('TO CHEGANDO AQUI');
+       this.navCtrl.push(DescDetalhesPage,{
+         mensagem: 'Mensagem passada por NavigationTestPage', cardDetalhe: objADO
+       })
+    }
 
-      this.baseDados.query("SELECT * FROM kv  ",[]).then((data) => {
-             this.saida = JSON.stringify(data);
-             //console.log("SAIDA: ", data );
-             console.log("RES: ", data.res );
-             console.log("RES2: ", JSON.stringify(data.res.rows) );
+    listarCards(){
 
-             console.log("tam: ", data.res.rows.length );
-             for(var i = 0; i < data.res.rows.length; i++) {
-                 console.log(".."+data.res.rows.item(i).key+": "+data.res.rows.item(i).value);
-                 //this.respostas.push({key: data.res.rows.item(i).key, value: data.res.rows.item(i).value});
-                 console.log("respostas: ", JSON.stringify(this.respostas) );
-                 // nao funcionou: this.respostas.push(data.res.rows.item(i));
-                 this.respostas.push({key: i, value: data.res.rows.item(i).value});
-             }
+      console.log("listarCards : chamei a funcao" );
+      this.cards.retorna().then((data) => {
+         //console.log('listarPessoasDOIS saida: ',data);
+         console.log("listarCards tam: ", data.rows.length );
+         this.listaCards = [];
 
-         }, (error) => {
-             console.log("ERROR: " + JSON.stringify(error));
-       });
-  }
+         for(var i = 0; i < data.rows.length; i++) {
+             console.log(".."+data.rows.item(i).id_desc+": "+data.rows.item(i).nome_resumo);
+             this.listaCards.push({id: data.rows.item(i).id, id_desc: data.rows.item(i).id_desc, nome_resumo: data.rows.item(i).nome_resumo, categoria: data.rows.item(i).categoria});
+             //di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes
+         }
+
+         console.log("listaCards: ", JSON.stringify(this.listaCards) );
+      }, (error) => {
+            console.log('Error', error.err);
+            //this.displayToast('Full of errors', 5000);
+      });
+    }
+
+    testePontoInicial(){
+       this.cards.adicionar({"id_desc":"10","categoria":"calcados","nome_resumo":"Card Teste 1","nome_completo":"Moa Cal\u00e7ado","data_hoje":"","validade":"2015-12-25","contato":"011 1406","local_cidade":"campinas-sp","local_detalhes":"Shopping Parque Don Pedro, campinas-s","observacoes":"","coordenadas":"-22.847656, -47.06423","img_card":" ","img_detalhes":""});
+       //                     di.id_desc   , di.categoria         , di.nome_resumo           , di.nome_completo                 , di.data_hoje , di.validade           , di.contato         , di.local_cidade            , di.local_detalhes                                      , di.observacoes , di.coordenadas                      , di.img_card , di.img_detalhes
+    }
+
+    testeAtualizaMaiorId(){
+      this.cards.atualizaMaiorId();
+      let num = this.cards.pegaMaiorId();
+      this.saida = num.toString();
+      //this.cards.pegaMaiorId().then();
+    }
+
+    testeRemove(idTR){
+      this.cards.remover(idTR);
+      this.listarCards();
+    }
 }
