@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DescontosPage } from '../pages/descontos/descontos';
 import { DescDetalhesPage } from '../pages/desc-detalhes/desc-detalhes';
+import { Storage } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { DescDetalhesPage } from '../pages/desc-detalhes/desc-detalhes';
     DescDetalhesPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, { tabsHideOnSubPages: true })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -31,6 +32,6 @@ import { DescDetalhesPage } from '../pages/desc-detalhes/desc-detalhes';
     DescontosPage,
     DescDetalhesPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},Storage]
 })
 export class AppModule {}

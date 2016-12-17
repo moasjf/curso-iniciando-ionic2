@@ -14,3 +14,13 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+ion-tab {
+  transform: translateY(-200%);
+}
+
+ion-tab.show-tab {
+  transform: translateY(0);
+}
+// tentativa de resolver o problema do scroll travar ao esconder as abas (subpages)
+// IonicModule.forRoot(MyApp, { tabsHideOnSubPages: true } )

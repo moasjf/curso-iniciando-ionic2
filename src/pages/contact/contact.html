@@ -1,24 +1,36 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Contact
+      Tela Debug
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <p>Provider msg: {{cards.msg}}</p>
+<ion-content padding>
+  <p>versao: v0011</p>
   <p>Provider maiorID: {{cards.maiorId}}</p>
   <p>saida: {{ saida }}</p>
+  <p>Provider qtdeNormal: {{cards.qtdeNormal}}</p>
 
+  <button ion-button (click)="testeAdicionar()"                  >Ponto Inicial</button>
+  <button ion-button (click)="listarCards()"                     >Atualizar</button>
+  <button ion-button (click)="pegaDescontos()" color="danger"    >Busca Net</button>
+  <button ion-button (click)="testeBuscaNet()" color="secondary" >Busca Net Int</button>
 
   <ion-list>
     <ion-list-header>Registros</ion-list-header>
-    <ion-item *ngFor="let p of listaCards" (click)="abrirDetalhes(p)" >
-      <ion-icon name="card" item-left></ion-icon>
+    <ion-item *ngFor="let p of listaCards" >
+      <ion-icon name="card" item-left  (click)="abrirDetalhes(p)"></ion-icon>
       id={{p.id}} id_desc= {{p.id_desc}}- {{p.nome_resumo}}
       <ion-icon name="search"  item-right (click)="abrirDetalhes(p)"                ></ion-icon>
       <ion-icon name="trash"   item-right (click)="testeRemove(p.id)" color="danger"></ion-icon>
     </ion-item>
   </ion-list>
+  <div *ngIf="!cards.qtdeNormal">
+       <p>LISTA VAZIA </p>
+    </div>
+
+  <div *ngIf="cards.buscandoInternet">
+         <p>Indo na internet buscar mais </p>
+  </div>
 </ion-content>

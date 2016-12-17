@@ -7,13 +7,14 @@
 
 <ion-content padding>
 <p>Aqui vem os cards</p>
+ 
 <button ion-button block (click)="pegaDescontos()">Pegar dados</button>
 
 <button ion-button (click)="testePontoInicial()">Ponto Inicial</button>
 <button ion-button (click)="testeAtualizaMaiorId()">At. Maior Id</button>
 <button ion-button (click)="listarCards()">listarCards</button>
 
-
+<p>Provider qtdeNormal: {{cards.qtdeNormal}}</p>
 <p>saida:</p>
  <p *ngFor="let c of listaCards">{{ c.id }}. {{ c.nome_resumo }}&nbsp;&nbsp;&nbsp;
    <!-- a (click)="abrirDetalhes(c)"> ABRIR </a>&nbsp;&nbsp;&nbsp;&nbsp;

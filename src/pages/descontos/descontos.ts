@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { Cards} from './../../providers/cards';
 import { DescDetalhesPage  } from './../desc-detalhes/desc-detalhes';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-descontos',
@@ -11,41 +12,31 @@ export class DescontosPage {
   listaCards: Array<Object> = [];
   saida: string;
   loading: any;
+  //sessao: any;
 
-  constructor(public navCtrl: NavController, public cards: Cards, public loadingCtrl: LoadingController) {
-    //this.listaCards = [];
-    //this.listarCards();
-    this.loading = this.loadingCtrl.create({
-          		content: 'Fetching content...'      	});
-
-            console.log('Constructor: agora vai');
-            /*
-     this.cards.retorna().then((data) => {
-        console.log('Constructor: iniciando busca cards');
-        console.log("listarCards tam: ", data.rows.length );
-        this.listaCards = [];
-
-        for(var i = 0; i < data.rows.length; i++) {
-            console.log(".."+data.rows.item(i).id_desc+": "+data.rows.item(i).nome_resumo);
-            this.listaCards.push({id: data.rows.item(i).id, id_desc: data.rows.item(i).id_desc, nome_resumo: data.rows.item(i).nome_resumo, categoria: data.rows.item(i).categoria});
-            //di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes
-        }
-
-        console.log("listaCards: ", JSON.stringify(this.listaCards) );
-        //this.loading.dismiss();
-     }, (error) => {
-           console.log('Error', error.err);
-           //this.displayToast('Full of errors', 5000);
-     }); */
-
-     //this.listarCards();
+  constructor(public navCtrl: NavController, public cards: Cards, public loadingCtrl: LoadingController, public storage: Storage ) {
+      this.loading = this.loadingCtrl.create({	content: 'Carregando...'      	});
+     // NativeStorage.getItem('sessao').then(
+     //    data => { console.log(data); this.sessao = data; }, error => console.error(error)        );
+      //console.log('descontos.ts Constructor: pequei sessao=', JSON.stringify(this.sessao));
+      storage.set('name', 'Max');
   }
 
   ionViewDidLoad() {
-    console.log('Pag Desconto: iniciando');
-    this.listarCards();
-    this.cards.atualizaMaiorId();
+     console.log('Pag Desconto: iniciando.. TIMEOUT agora');
+
+     let that = this; // resolver uma questão de escopo do SetTimeout
+     setTimeout(function(){             console.log("--------------INICIO setTimeou ");
+         that.listarCards();
+         that.cards.atualizaMaiorId();  console.log("--------------"); }, 2000);
+
+         //console.log('TESTE: ', this.storage.get('name') );
+         this.storage.get('name').then((val) => {
+            console.log('TESTE: Your name is ', val);
+         })
+
   }
+
 
 
   abrirDetalhes(objADO){
@@ -74,9 +65,8 @@ export class DescontosPage {
 
   listarCards(){
     this.loading.present();
-    console.log("listarCards : chamei a funcao" );
+    console.log("descontos.ts listarCards: chamei a funcao" );
     this.cards.retorna().then((data) => {
-       //console.log('listarPessoasDOIS saida: ',data);
        console.log("listarCards tam: ", data.rows.length );
        this.listaCards = [];
 
@@ -86,11 +76,11 @@ export class DescontosPage {
            //di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes
        }
 
-       console.log("listaCards: ", JSON.stringify(this.listaCards) );
+       // console.log("listaCards: ", JSON.stringify(this.listaCards) );
        this.loading.dismiss();
     }, (error) => {
-          console.log('Error', error.err);
-          //this.displayToast('Full of errors', 5000);
+          console.log('descontos.ts listarCards: Error ', error.err);
+          this.loading.dismiss();
     });
   }
 
