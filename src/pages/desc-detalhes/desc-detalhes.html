@@ -1,39 +1,123 @@
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Detalhes Card</ion-title>
+  <ion-navbar >
+    <ion-title><font face="Arial" size="7" color="#FFF" >{{id_desc}}</font><font face="Arial" size="6" color="#FFF" >%&nbsp;&nbsp;{{nome_resumo}}</font></ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <p>Saida 2 (nome_resumo): {{ saida2 }}</p>
+  <!-- INICIO tela detalhes -->
+  <table border="0" width="100%"  cellpadding="0" style="border-collapse: collapse">
+   <tr>
+    <td height="220" background="assets/images/imagemTeste.png">&nbsp;</td>
+   </tr>
+   <tr>
+    <td  bgcolor="#F99C4C" height="5" ></td>
+   </tr>
+   <tr>
+    <td bgcolor="#FFFFFF">
 
-  <button ion-button (click)="voltar()">Voltar</button>
+         <!-- INICIO da tabela de elementos cinzas -->
+         <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+            <tr *ngIf="observacoes"><td width="100%" colspan="5" height="20">&nbsp;</td></tr><!-- linha de espaçamento -->
+            <tr *ngIf="observacoes">
+         <td width="5%">&nbsp;</td>
+         <td width="90%" colspan="3">
+          <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+           <tr>
+            <td width="13%" valign="top" align="center"><img border="0" src="assets/images/observacoes.roxo.svg" width="31" height="32"></td>
+            <td width="87%" valign="top" >
+             <p style="margin-top: 0; margin-bottom: 0">     <font face="Arial" size="4" color="#808080"                    > Condições:</font></p>
+             <p style="margin-top: 0; margin-bottom: 0"> <b>	<font face="Arial" size="5" color="#808080" id="detObservacoes">{{observacoes}}</font></b></td>
+           </tr>
+          </table>
 
-  <p>id: <b>{{id}}</b></p>
-  <p>id_desc: <b>{{id_desc}}</b></p>
-  <p>categoria: <b>{{categoria}}</b></p>
-  <p>nome_resumo: <b>{{nome_resumo}}</b></p>
-  <p>nome_completo: <b>{{nome_completo}}</b></p>
-  <p>data_hoje: <b>{{data_hoje}}</b></p>
-  <p>validade: <b>{{validade}}</b></p>
-  <p>contato: <b>{{contato}}</b></p>
-  <p>local_cidade: <b>{{local_cidade}}</b></p>
-  <p>local_detalhes: <b>{{local_detalhes}}</b></p>
-  <p>observacoes: <b>{{observacoes}}</b></p>
-  <p>coordenadas: <b>{{coordenadas}}</b></p>
+         </td>
+         <td width="5%">&nbsp;</td>
+         </tr>
 
-  <p>Saida  (id_desc): {{ saida }}</p>
-  <br><br><br><br>
-  ...
-  <br><br><br><br>
-  ...
-  <p>Saida  (id_desc): {{ saida }}</p>
+         <tr><td width="100%" colspan="5" height="33">&nbsp;</td></tr><!-- linha de espaçamento -->
+         <tr>
+         <td width="5%">&nbsp;</td>
+         <td width="90%" colspan="3">
+         <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+          <tr>
+           <td width="13%" valign="top" align="center"><img border="0" src="assets/images/localidade.roxo.svg" width="31" height="32"></td>
+           <td width="87%"  valign="top" >
+            <p style="margin-top: 0; margin-bottom: 0"> <b><font face="Arial" size="5" color="#808080" >{{nome_completo}}</font></b>
+            <p style="margin-top: 0; margin-bottom: 0">    <font face="Arial" size="4" color="#808080" >{{local_detalhes}}</font></p>
+            </td>
+          </tr>
+         </table>
+         </td>
+         <td width="5%">&nbsp;</td>
+         </tr>
+         <tr><td width="100%" colspan="5" height="33">&nbsp;</td></tr><!-- linha de espaçamento -->
+         <tr>
+         <td width="5%">&nbsp;</td>
+         <td width="43%">
+         <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+          <tr>
+           <td width="25%" align="center" valign="top"><img border="0" src="assets/images/duracao.roxo.svg" width="31" height="32"></td>
+           <td width="64%"  valign="top">
+            <p style="margin-top: 0; margin-bottom: 0">    <font face="Arial" size="4" color="#808080" >Valido até</font></p>
+            <p style="margin-top: 0; margin-bottom: 0"> <b><font face="Arial" size="5" color="#808080" >{{validade}}</font></b></td>
+          </tr>
+         </table>
+         </td>
+         <td width="4%">
+         </td>
+         <td width="43%">
+         <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+          <tr>
+           <td width="25%" valign="top" align="center"><img border="0" src="assets/images/fidelidade.roxo.svg" width="31" height="32"></td>
+           <td width="64%" valign="top" >
+            <p style="margin-top: 0; margin-bottom: 0"> <font face="Arial" size="4" color="#808080"               >Ou até durar</font></p>
+            <p style="margin-top: 0; margin-bottom: 0"> <font face="Arial" size="4" color="#808080" id="detPontos">o estoque</font></p></td>
+          </tr>
+         </table>
+         </td>
+         <td width="5%">&nbsp;</td>
+         </tr>
 
-  <ion-footer>
+         <tr><td width="100%" colspan="5" height="33">&nbsp;</td></tr><!-- linha de espaçamento -->
+         </table>
+        <!-- FINAL da tabela de elementos cinzas -->
+
+
+        <!-- INICIO area de botoes -->
+        <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+         <tr>
+          <td width="5%">&nbsp;</td>
+          <td width="43%">
+           <button ion-button block (click)="voltar()" large outline icon-left color="laranja">
+            <ion-icon name="arrow-back"></ion-icon> Voltar </button>
+          </td>
+          <td width="4%"></td>
+          <td width="43%">
+            <button ion-button block (click)="abrirEuQuero()" large outline icon-left color="laranja">
+             <ion-icon name="cart"></ion-icon> Eu Quero</button>
+          </td>
+          <td width="5%">&nbsp;</td>
+         </tr>
+        </table>
+        <!-- FINAL area de botoes -->
+
+
+    </td>
+   </tr>
+   <tr>
+    <td  bgcolor="#FFFFFF" height="15" ></td>
+   </tr>
+
+   <!-- tr>
+    <td  bgcolor="#F99C4C" height="4" ></td>
+   </tr -->
+  </table>
+  <!-- FINAL tela detalhes -->
+
+  <!--ion-footer>
     <ion-toolbar no-border-bottom>
       <ion-buttons left>
         <button ion-button icon-left color="secundary" (click)="voltar()" >
@@ -42,6 +126,33 @@
         </button>
       </ion-buttons>
     </ion-toolbar>
-  </ion-footer>
+  </ion-footer -->
+
+  <p (click)="exibeDebug()">...</p>
+
+  <div *ngIf="flagExibeDebug">
+      <p>Saida 2 (nome_resumo): {{ saida2 }}</p>
+
+      <button ion-button (click)="voltar()">Voltar</button>
+
+      <p>id: <b>{{id}}</b></p>
+      <p>id_desc: <b>{{id_desc}}</b></p>
+      <p>categoria: <b>{{categoria}}</b></p>
+      <p>nome_resumo: <b>{{nome_resumo}}</b></p>
+      <p>nome_completo: <b>{{nome_completo}}</b></p>
+      <p>data_hoje: <b>{{data_hoje}}</b></p>
+      <p>validade: <b>{{validade}}</b></p>
+      <p>contato: <b>{{contato}}</b></p>
+      <p>local_cidade: <b>{{local_cidade}}</b></p>
+      <p>local_detalhes: <b>{{local_detalhes}}</b></p>
+      <p>observacoes: <b>{{observacoes}}</b></p>
+      <p>coordenadas: <b>{{coordenadas}}</b></p>
+
+      <p>Saida  (id_desc): {{ saida }}</p>
+      <br><br><br><br>
+      ...
+  </div>
+
+
 
 </ion-content>

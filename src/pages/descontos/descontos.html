@@ -1,31 +1,93 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Descontos</ion-title>
+  <ion-navbar color="light" align-title="center">
+    <ion-title ><font face="Arial" size="5" color="#373952" >Meu Desconto</font></ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-<p>Aqui vem os cards</p>
- 
-<button ion-button block (click)="pegaDescontos()">Pegar dados</button>
 
-<button ion-button (click)="testePontoInicial()">Ponto Inicial</button>
-<button ion-button (click)="testeAtualizaMaiorId()">At. Maior Id</button>
-<button ion-button (click)="listarCards()">listarCards</button>
+ <button ion-button block outline (click)="aceitarNovidade()" *ngIf="flagTemNovidade" color="roxo" icon-left><ion-icon name="refresh"></ion-icon>Tem Novidade</button>
+ <p (click)="exibeDebug()">...</p>
 
-<p>Provider qtdeNormal: {{cards.qtdeNormal}}</p>
-<p>saida:</p>
- <p *ngFor="let c of listaCards">{{ c.id }}. {{ c.nome_resumo }}&nbsp;&nbsp;&nbsp;
-   <!-- a (click)="abrirDetalhes(c)"> ABRIR </a>&nbsp;&nbsp;&nbsp;&nbsp;
-   <a (click)="testeRemove(c.id)"> Excluir [{{c.id}}] </a -->
-   <button ion-button (click)="abrirDetalhes(c)">Abrir {{ c.id }}</button>&nbsp;
-   <button ion-button (click)="testeRemove(c.id)" color="danger">Excluir {{ c.id }}</button>
- </p>
 
- <!-- button ion-button (click)="abrirDetalhes(c)">Abrir {{ c.id }}</button>
- <button ion-button (click)="testeRemove(c.id)">Excluir {{ c.id }}</button -->
- <!--a (click)="abrirDetalhes(c)"> ABRIR </a -->
- <!-- a (click)="testeRemove(c.id)"> Excluir [{{c.id}}] </a -->
-<p>{{saida}}</p>
+ <div *ngIf="flagExibeDebug">
+  <button ion-button block (click)="pegaDescontos()">Pegar dados</button>
+  <button ion-button (click)="testeAdicionar()">Adicionar +</button>
+  <button ion-button (click)="listarCards()">listarCards</button>
+  <br>
+  <button ion-button (click)="testeAtualizaMaiorId()"  outline >Sess Id </button>
+  <button ion-button (click)="testePegaMaiorIdCards()" outline >Card Id</button>
+
+
+  <p>Provider qtdeNormal: {{cards.qtdeNormal}}</p>
+  <p>maiorId Sessao={{ maiorId }}</p>
+  <p>saida: {{saida}} </p>
+   <!-- p *ngFor="let c of listaCards">{{ c.id }}. {{ c.nome_resumo }}&nbsp;&nbsp;&nbsp;
+     <button ion-button (click)="abrirDetalhes(c)">Abrir {{ c.id }}</button>&nbsp;
+     <button ion-button (click)="testeRemove(c.id)" color="danger">Excluir {{ c.id }}</button>
+   </p -->
+  </div>
+
+
+   <div *ngFor="let c of listaCards" id="card_{{ c.id }}">
+         <div class="divProdutos"  valign="center" >
+          <table border="0" width="100%" cellspacing="0" cellpadding="0" class="minhaTabela">
+           <tr>
+            <td height="223"
+             style="background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDADIiJSwlHzIsKSw4NTI7S31RS0VFS5ltc1p9tZ++u7Kfr6zI4f/zyNT/16yv+v/9////////wfD/////////////2wBDATU4OEtCS5NRUZP/zq/O////////////////////////////////////////////////////////////////////wAARCAD4AZ4DASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAQIDAAQF/8QANxAAAQMCBAUDAwMEAgIDAQAAAQACEQMhEjFBUQQiMmFxEzOBI0KRUnKhFGKxwUPRJOE0kqLw/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAECAwT/xAAiEQEBAAIDAAICAwEAAAAAAAAAAQIREiExQVEDMhMiYUL/2gAMAwEAAhEDEQA/AEgSUDoqOw4TklcAIhZNGCyIRhMAMwtp8ogSQFtPlABFYBGEAEYRATAIBYRwpkUAkIQnISlABBFZBEOaBTHNTe1xFrFZfKzoF14hMBAEoECZSBTO/wCECnjshHZPYZndGyzc4TR4VQJuyUXrocLZBQe1MJt1XXw4PouK5WjNdVD2XKktdCr7Tr6FNJS1D9N1tCpN58iNZRbO4A3KbMRIjOEWANfLmhw2WrMp0uDI0QAGF2eiOHnkAgSsMn/H+UA9LpMDVdVLIeFy0uk+V1Ush4WeTTAT1BOEp6gnCyqxb0hEZpQQB4SCpJmCAN0jVdkkBgEEXlOclhkgyjJY5IrHJIzNvmscygEUEUpQAmKDckGBECQLrA2CYoYTCZCUFmgwZMrJGm4ZpQOZWdBCSLhbxgOQTQECOUphEKM7YqRg262ERmsjFlPO6PQYe62A9k4CICP5KWoUNKMFNA3QIG6P5KNBhK0QgQlM6OKqfkHExWU5duticnyhaMUQFPG7YLeqQMk+ULVF2aVb1LyWrB7SYAhRZ2qMfC0oyh8JAVoQkDMphByMpGWBNwmkLRdaFc8APghc7/K6HCyg8JkQarpon6ZHdc4sCr0WuwRhO+SolABskqx6bvBThrwQEr2kscCW7ZpB5sEIgwuocJ+p47wnZwjDm8/AWm0acYcQna6Q7wut3CUg4NvPlc9Rgpve1uQCWxorMl00phvhc7BAXRT+1Rk0xPF/lNI3QQOayWOiwEiN0SOU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'); background-repeat:background-position: right top"
+             align="left" valign="top"  class="arredondaTUDO"
+               >
+
+             <table border="0" width="100%" cellpadding="0" bordercolor="#008000" class="minhaTabela" style="border-collapse: collapse">
+              <tr  height="64" (click)="abrirDetalhes(c)" >
+               <td width="8%" height="64" >&nbsp;</td>
+               <td width="22%" height="64" valign="bottom" style=" opacity: 0.7;" bgcolor="#000000" >
+                <p align="center"><b><font face="Arial" size="8" color="#FFFFFF" style=" opacity: 1;">{{ c.id }}</font><font face="Arial" size="3" color="#FFFFFF">%</font></b></td>
+               <td width="70%" height="64">&nbsp;</td>
+              </tr>
+              <tr><td width="100%" colspan="3" height="115" (click)="abrirDetalhes(c)" ></td></tr>
+              <!-- tr>
+               <td width="100%" colspan="3" height="29" style=" opacity: 0.7;" bgcolor="#000000" ><p align="center"><font face="Arial" size="5" color="#FFFFFF">{{ c.nome_resumo }}</font></td>
+              </tr -->
+              <tr>
+              <td height="44"  colspan="3" class="arredondaINF" style=" opacity: 0.8;" bgcolor="#000000" >
+               <table border="0" width="100%" cellpadding="0"  >
+                <tr>
+                 <td align="center" style="border-right: 1px solid #676A83 !important;"   (click)="trocaTipo(c.id, 'estrela')" ><img border="0" src="assets/images/icone.estrelaBranco2.svg" width="30" height="30"></td>
+                 <td align="center"                                                       (click)="testeRemove(c.id)"          ><img border="0" src="assets/images/icone.removerBranco2.svg" width="30" height="30"></td>
+                </tr>
+               </table>
+              </td>
+             </tr>
+             </table>
+            </td>
+           </tr>
+          </table>
+         </div><br><br>
+   </div>
+
+   <div *ngIf="!cards.qtdeNormal">
+       <table border="0" width="100%" style="border-collapse: collapse;" >
+         <tr height="33">
+          <td width="11%" align="center" valign="top" rowspan="4"></td>
+          <td width="77%" align="center">&nbsp;</td>
+          <td width="10%" align="center" rowspan="4"></td>
+         </tr>
+         <tr>
+          <td width="77%" align="center"> <img border="0" src="assets/images/icone.cardsFundo.svg" width="80%" ></td>
+         </tr>
+         <tr>
+          <td width="77%"><br><br>
+           <p style="margin-top: 0; margin-bottom: 0" align="center"> <font face="Arial" size="6">Nenhum </font></p>
+           <p style="margin-top: 0; margin-bottom: 0" align="center"> <font face="Arial" size="6">desconto no </font></p>
+           <p style="margin-top: 0; margin-bottom: 0" align="center"> <font face="Arial" size="6">momento</font></p>
+           <p style="margin-top: 0; margin-bottom: 0" align="center">&nbsp;</p>
+           <p style="margin-top: 0; margin-bottom: 0" align="center"> <font face="Arial" size="4">para os interesses</font>
+           <p style="margin-top: 0; margin-bottom: 0" align="center"> <font face="Arial" size="4">marcados ou cidade</font>
+           <p style="margin-top: 0; margin-bottom: 0" align="center"> <font face="Arial" size="4">escolhida</font></td>
+         </tr>
+       </table>
+   </div>
+
 </ion-content>

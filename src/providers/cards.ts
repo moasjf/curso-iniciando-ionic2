@@ -20,7 +20,7 @@ export class Cards {
          name: "meu10conto.db",
          location: "default"
      }).then(() => {
-         this.db.executeSql("CREATE TABLE IF NOT EXISTS cards (id INTEGER PRIMARY KEY AUTOINCREMENT, id_desc INTEGER, categoria TEXT, nome_resumo TEXT, nome_completo TEXT, data_hoje TEXT, validade TEXT, contato TEXT, local_cidade TEXT, local_detalhes TEXT, observacoes TEXT, coordenadas TEXT, img_card TEXT, img_detalhes TEXT)", {}).then((data) => {
+         this.db.executeSql("CREATE TABLE IF NOT EXISTS cards (id INTEGER PRIMARY KEY AUTOINCREMENT, id_desc INTEGER, tipo TEXT, categoria TEXT, nome_resumo TEXT, nome_completo TEXT, data_hoje TEXT, validade TEXT, contato TEXT, local_cidade TEXT, local_detalhes TEXT, observacoes TEXT, coordenadas TEXT, img_card TEXT, img_detalhes TEXT)", {}).then((data) => {
                           console.log("CARS: tabela CARDS criada ", data);
          }, (error) => {  console.error("CARS: erro ao criar tabela CARDS", error);        })
      }, (error) => {      console.error("Unable to open db", error);                       });
@@ -32,7 +32,7 @@ export class Cards {
          name: "meu10conto.db",
          location: "default"
      }).then(() => {
-         this.db.executeSql("CREATE TABLE IF NOT EXISTS cards (id INTEGER PRIMARY KEY AUTOINCREMENT, id_desc INTEGER, categoria TEXT, nome_resumo TEXT, nome_completo TEXT, data_hoje TEXT, validade TEXT, contato TEXT, local_cidade TEXT, local_detalhes TEXT, observacoes TEXT, coordenadas TEXT, img_card TEXT, img_detalhes TEXT)", {}).then((data) => {
+         this.db.executeSql("CREATE TABLE IF NOT EXISTS cards (id INTEGER PRIMARY KEY AUTOINCREMENT, id_desc INTEGER, tipo TEXT, categoria TEXT, nome_resumo TEXT, nome_completo TEXT, data_hoje TEXT, validade TEXT, contato TEXT, local_cidade TEXT, local_detalhes TEXT, observacoes TEXT, coordenadas TEXT, img_card TEXT, img_detalhes TEXT)", {}).then((data) => {
                           console.log("CARDS iniciaCards:   tabela CARDS criada ", data);
          }, (error) => {  console.error("CARDS iniciaCards: erro ao criar tabela CARDS", error);        })
      }, (error) => {      console.error("CARDS iniciaCards: Unable to open db", error);                       });
@@ -51,7 +51,7 @@ export class Cards {
 
   public atualizaQtde( tipoAQ ) {
        console.log("CARDS atualizaQtde(): " );
-       this.db.executeSql("SELECT COUNT(id) AS tot FROM cards", []).then((data) => {
+       this.db.executeSql("SELECT COUNT(id) AS tot FROM cards WHERE tipo = '"+tipoAQ+"' ", []).then((data) => {
            if(tipoAQ == 'normal'){
                    if(data.rows.length > 0) { this.qtdeNormal = data.rows.item(0).tot;
                    }else{                     this.qtdeNormal = 0;   }
@@ -75,22 +75,34 @@ export class Cards {
                      console.log("CARDS: REMOVI: "  + idR);
                      this.atualizaMaiorId();
                      this.atualizaQtde( 'normal' );
+                     this.atualizaQtde( 'estrela' );
      }, (error) => { console.log("CARDS: ERROR: " + JSON.stringify(error.err));
      });
   }
 
   public adicionar(di) {
     console.log("CARDS: tentei INSERIR: " + JSON.stringify(di) );
-     this.db.executeSql("INSERT INTO cards (id_desc, categoria, nome_resumo, nome_completo, data_hoje, validade, contato, local_cidade, local_detalhes, observacoes, coordenadas, img_card, img_detalhes) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?)", [di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes]).then((data) => {
+     this.db.executeSql("INSERT INTO cards (id_desc, tipo, categoria, nome_resumo, nome_completo, data_hoje, validade, contato, local_cidade, local_detalhes, observacoes, coordenadas, img_card, img_detalhes) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [di.id_desc, di.tipo, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes]).then((data) => {
          console.log("CARDS: INSERIU: " + JSON.stringify(data));
+         console.log("CARDS: INSERIU: " + data);
          this.atualizaMaiorId();
          this.atualizaQtde( 'normal' );
+         this.atualizaQtde( 'estrela' );
      }, (error) => { console.log("CARDS: ERROR: " + JSON.stringify(error.err));    });
   }
 
-  public retorna(){
-       console.log("CARDS: foi chamado funcao retorna() ");
-      return this.db.executeSql("SELECT * FROM cards", []);
+  public retorna(tipoR){
+      console.log("CARDS: foi chamado funcao retorna() com tipoR="+tipoR);
+      let trecho:string = "";
+      if(tipoR == "todos"){ trecho = "  ";                           }
+      if(tipoR != "todos"){ trecho = " WHERE tipo = '"+ tipoR +"'";  }
+      console.log("CARDS: foi chamado funcao retorna(): SELECT * FROM cards "+trecho+" ORDER BY id DESC " );
+      return this.db.executeSql("SELECT * FROM cards "+trecho+" ORDER BY id DESC ", []);
+  }
+
+  public aplicaTipo(idAT, tipoAT){
+       console.log("CARDS: foi chamado funcao aplicaTipo() ");
+      return this.db.executeSql("UPDATE cards SET tipo ='"+tipoAT+"' WHERE id = "+idAT, []);
   }
 
   buscaAtualizacoes(qtde:string){

@@ -1,3 +1,82 @@
 page-descontos {
 
+
+
+
+
+
 }
+
+ion-navbar {
+  font-size: 34px !important;
+  color: #373952; // your  text color
+  background: #f4f4f4; // your background color
+}
+
+			.divProdutos {
+				-webkit-box-shadow: 7px 7px 16px 0px rgba(50, 50, 50, 0.85);
+				-moz-box-shadow:    7px 7px 16px 0px rgba(50, 50, 50, 0.85);
+				box-shadow:         7px 7px 16px 0px rgba(50, 50, 50, 0.85);
+
+				-webkit-border-radius: 4px 4px 4px 4px;
+				-moz-border-radius:    4px 4px 4px 4px;
+				border-radius:         4px 4px 4px 4px;
+
+				margin-left: auto; margin-right: auto;
+			}
+
+			.minhaTabela {
+				-webkit-border-radius: 4px 4px 4px 4px;
+				-moz-border-radius:    4px 4px 4px 4px;
+				border-radius:         4px 4px 4px 4px;
+			}
+
+			.arredondaINF {
+				-webkit-border-radius: 0px 0px 4px 4px;
+				-moz-border-radius:    0px 0px 4px 4px;
+				border-radius:         0px 0px 4px 4px;
+			}
+
+			.arredondaINFdir {
+				-webkit-border-radius: 0px 0px 4px 0px;
+				-moz-border-radius:    0px 0px 4px 0px;
+				border-radius:         0px 0px 4px 0px;
+			}
+
+			.arredondaINFesq {
+				-webkit-border-radius: 0px 0px 0px 4px;
+				-moz-border-radius:    0px 0px 0px 4px;
+				border-radius:         0px 0px 0px 4px;
+			}
+
+			.arredondaSUP {
+				-webkit-border-radius: 4px 4px 0px 0px;
+				-moz-border-radius:    4px 4px 0px 0px;
+				border-radius:         4px 4px 0px 0px;
+			}
+
+			.sombraTexto {
+				text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+			}
+
+			.sombraTextoOutra {
+				text-shadow: 2px 2px 2px rgba(150, 150, 150, 0.8);
+			}
+
+   .arredondaTUDO {
+				-webkit-border-radius: 4px 4px 4px 4px;
+				-moz-border-radius:    4px 4px 4px 4px;
+				border-radius:         4px 4px 4px 4px;
+			}
+
+   .tabs-md .tab-button {
+    color: #fff; /*your  text color */
+    background: #373952; /* your background color*/
+    border-style: none;
+   }
+
+   .tabs-md .tab-button[aria-selected=true] {
+    color: #FFFFFF; // your  text color
+    background: #373952; // your background color
+    border-style: none;
+   }

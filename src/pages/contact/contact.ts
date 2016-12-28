@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { Cards} from './../../providers/cards';
 import { DescDetalhesPage  } from './../desc-detalhes/desc-detalhes';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-contact',
@@ -11,10 +12,11 @@ export class ContactPage {
   listaCards: Array<Object> = [];  //,  providers: [Cards]
   saida: string;
   loading: any;
+  maiorId: number;
 
-  constructor(public navCtrl: NavController, public cards: Cards) {
+  constructor(public navCtrl: NavController, public cards: Cards, public storage: Storage, public events: Events) {
 
-    this.cards.retorna().then((data) => {
+    this.cards.retorna('todos').then((data) => {
        console.log('Constructor: iniciando busca cards');
        console.log("listarCards tam: ", data.rows.length );
        this.listaCards = [];
@@ -27,37 +29,55 @@ export class ContactPage {
 
        console.log("listaCards: ", JSON.stringify(this.listaCards) );
         this.cards.atualizaQtde('normal');
+        this.cards.atualizaQtde('estrela');
     }, (error) => {
           console.log('Error', error.err);
     });
+
+
   }
 
   ionViewDidLoad() {
     console.log('Contact Page: iniciando');
     this.cards.atualizaMaiorId();
+    let that = this; // resolver uma questão de escopo do SetTimeout
+    setTimeout(function(){             console.log("contact.ts--------------INICIO setTimeou ");
+        that.storage.get('sessao_maiorId').then((val) => {
+           if(val != null){  that.maiorId = val;                console.log('contact sessao_maiorId=', that.maiorId);
+           }else{            that.maiorId = that.cards.maiorId; console.log('contact.ts SETEI sessao_maiorId=', that.maiorId);
+                             that.storage.set('contact.ts sessao_maiorId',that.maiorId);
+           }
+        });
+     }, 3000);
   }
 
-    abrirDetalhes(objADO){
-       console.log('TO CHEGANDO AQUI');
-       this.navCtrl.push(DescDetalhesPage,{
-         mensagem: 'Mensagem passada por NavigationTestPage', cardDetalhe: objADO
-       })
-    }
+  ionViewWillEnter(){  // chamado sempre que a pessoa clica na aba
+      this.listarCards();
+  }
+
+  abrirDetalhes(objADO){
+     console.log('TO CHEGANDO AQUI');
+     this.navCtrl.push(DescDetalhesPage,{
+       mensagem: 'Mensagem passada por NavigationTestPage', cardDetalhe: objADO
+     })
+  }
 
     listarCards(){
       console.log("listarCards : chamei a funcao" );
-      this.cards.retorna().then((data) => {
+      this.cards.retorna('todos').then((data) => {
          //console.log('listarPessoasDOIS saida: ',data);
          console.log("listarCards tam: ", data.rows.length );
          this.listaCards = [];
 
          for(var i = 0; i < data.rows.length; i++) {
              console.log(".."+data.rows.item(i).id_desc+": "+data.rows.item(i).nome_resumo);
-             this.listaCards.push({id: data.rows.item(i).id, id_desc: data.rows.item(i).id_desc, nome_resumo: data.rows.item(i).nome_resumo, categoria: data.rows.item(i).categoria});
+             this.listaCards.push({id: data.rows.item(i).id, id_desc: data.rows.item(i).id_desc, tipo: data.rows.item(i).tipo, nome_resumo: data.rows.item(i).nome_resumo, categoria: data.rows.item(i).categoria});
              //di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade, di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes
          }
 
          console.log("listaCards: ", JSON.stringify(this.listaCards) );
+         this.cards.atualizaQtde('normal');
+         this.cards.atualizaQtde('estrela');
       }, (error) => {
             console.log('Error', error.err);
             //this.displayToast('Full of errors', 5000);
@@ -66,9 +86,11 @@ export class ContactPage {
 
 
     testeAdicionar(){
-       this.cards.adicionar({"id_desc":"10","categoria":"calcados","nome_resumo":"Card Teste 1","nome_completo":"Moa Cal\u00e7ado","data_hoje":"","validade":"2015-12-25","contato":"011 1406","local_cidade":"campinas-sp","local_detalhes":"Shopping Parque Don Pedro, campinas-s","observacoes":"","coordenadas":"-22.847656, -47.06423","img_card":" ","img_detalhes":""});
-       //                     di.id_desc   , di.categoria         , di.nome_resumo           , di.nome_completo                 , di.data_hoje , di.validade           , di.contato         , di.local_cidade            , di.local_detalhes                                      , di.observacoes , di.coordenadas                      , di.img_card , di.img_detalhes
-       this.listarCards();
+      this.cards.adicionar({"id_desc":"10", "tipo":"normal","categoria":"calcados","nome_resumo":"Card Teste 1","nome_completo":"Moa Cal\u00e7ado","data_hoje":"","validade":"2015-12-25","contato":"011 1406","local_cidade":"campinas-sp","local_detalhes":"Shopping Parque Don Pedro, campinas-s","observacoes":"aqui vem um texto de observacoes","coordenadas":"-22.847656, -47.06423","img_card":" ","img_detalhes":""});
+      //                     di.id_desc   , di.tipo        , di.categoria         , di.nome_resumo           , di.nome_completo                 , di.data_hoje , di.validade           , di.contato         , di.local_cidade            , di.local_detalhes                                      , di.observacoes                                   , di.coordenadas                      , di.img_card , di.img_detalhes
+      this.listarCards();
+      this.events.publish('cards:criado', 'bla_var1', Date.now());
+      console.warn('contact.ts: EVENTO cards:criado ');
     }
 
     testeAtualizaMaiorId(){
@@ -98,7 +120,7 @@ export class ContactPage {
               console.log('pegaDescontos: '+i+':', json[i].categoria, ' id=', json[i].id_desc, ' nome_resumo=', json[i].nome_resumo );
               this.listaCards.push(json[i]);
 
-              this.cards.adicionar({"id_desc":json[i].id_desc,"categoria":json[i].categoria,"nome_resumo":json[i].nome_resumo,"nome_completo":json[i].nome_completo,"data_hoje":json[i].data_hoje,"validade":json[i].validade,"contato":json[i].contato,"local_cidade":json[i].local_cidade,"local_detalhes":json[i].local_detalhes,"observacoes":json[i].observacoes,"coordenadas":json[i].coordenadas,"img_card":json[i].img_card,"img_detalhes":json[i].img_detalhes});
+              this.cards.adicionar({"id_desc":json[i].id_desc,"tipo":"normal","categoria":json[i].categoria,"nome_resumo":json[i].nome_resumo,"nome_completo":json[i].nome_completo,"data_hoje":json[i].data_hoje,"validade":json[i].validade,"contato":json[i].contato,"local_cidade":json[i].local_cidade,"local_detalhes":json[i].local_detalhes,"observacoes":json[i].observacoes,"coordenadas":json[i].coordenadas,"img_card":json[i].img_card,"img_detalhes":json[i].img_detalhes});
           }
 
           if(res.status == 200){
@@ -114,5 +136,10 @@ export class ContactPage {
           console.log('erro: ' + err); //this.loading.dismiss();
           this.cards.buscandoInternet = 0;
        });
+    }
+
+    apagaBanco(){
+       this.cards.limpar();
+       this.listaCards = [];
     }
 }

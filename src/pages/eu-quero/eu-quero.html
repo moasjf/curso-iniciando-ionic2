@@ -1,0 +1,163 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title><font face="Arial" size="6" color="#FFF" >{{id_desc}}</font><font face="Arial" size="5" color="#FFF" >%&nbsp;&nbsp;Como conseguir</font></ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+ <!-- p (click)="exibeDebug()">...</p>
+
+ <div *ngIf="flagExibeDebug">
+     <button ion-button (click)="voltar()">Voltar</button>
+
+     <p>id: <b>{{id}}</b></p>
+     <p>id_desc: <b>{{id_desc}}</b></p>
+     <p>nome_resumo: <b>{{nome_resumo}}</b></p>
+     <p>nome_completo: <b>{{nome_completo}}</b></p>
+     <p>local_cidade: <b>{{local_cidade}}</b></p>
+     <p>local_detalhes: <b>{{local_detalhes}}</b></p>
+     <p>observacoes: <b>{{observacoes}}</b></p>
+     <p>validade: <b>{{validade}}</b></p>
+
+
+
+     <p>Saida: {{ saida }}</p>
+     <br><br><br><br>
+     ...
+ </div -->
+
+  <!-- INICIO da tabela eu quero -->
+  <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+         <tr>
+           <td width="100%" colspan="3" height="20">&nbsp;</td></tr><!-- linha de espaçamento -->
+         <tr>
+           <td width="5%"  >&nbsp;</td>
+           <td width="90%"  >
+            <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse" cellspacing="0">
+             <tr>
+              <td width="100%" valign="bottom" align="center"><img border="0" src="assets/images/MeuDesconto.logo72x72_.png" width="246" height="252"></td>
+             </tr>
+             <tr>
+              <td width="100%" align="center" bgcolor="#F99C4C" height="40" >
+               <b><font face="Arial" size="5" color="#FFFFFF"> cod: {{id_desc}}AWqq2232</font></b></td>
+             </tr>
+            </table>
+
+           </td>
+           <td width="5%"  >&nbsp;</td>
+          </tr>
+         <tr>
+           <td width="100%" colspan="3" height="20">&nbsp;</td></tr><!-- linha de espaçamento -->
+         <tr >
+           <td width="5%">&nbsp;</td>
+           <td width="90%">
+            <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+             <tr>
+              <td width="13%" valign="top" align="center"><img border="0" src="assets/images/localidade.roxo.svg" width="40" height="40"></td>
+              <td width="9%"  valign="center" >	 <p style="margin-top: 0; margin-bottom: 0"><font face="Arial" color="#808080" size="5">1</font></p></td>
+              <td width="77%" valign="center" >  <p style="margin-top: 0; margin-bottom: 0"><font face="Arial" color="#808080" size="3"> Corra para a loja {{nome_completo}} que fica no {{local_detalhes}} </font></td>
+             </tr>
+            </table>
+           </td>
+           <td width="5%">&nbsp;</td>
+         </tr>
+
+         <tr> <!-- PASSO 2-->
+             <td width="100%" colspan="3" height="20">&nbsp;</td></tr><!-- linha de espaçamento -->
+         <tr >
+           <td width="5%">&nbsp;</td>
+           <td width="90%">
+            <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+             <tr>
+              <td width="13%" valign="top" align="center"><img border="0" src="assets/images/exibeTela.roxo.svg" width="40" height="40"></td>
+              <td width="9%"  valign="center">	 <p style="margin-top: 0; margin-bottom: 0"><font face="Arial" size="5" color="#808080">2</font></p></td>
+              <td width="77%" valign="center">  <p style="margin-top: 0; margin-bottom: 0"><font face="Arial" color="#808080" size="3"> Apresente essa tela para o atendente da loja</font></td>
+             </tr>
+            </table>
+           </td>
+           <td width="5%">&nbsp;</td>
+         </tr>
+
+         <tr>
+           <td width="100%" colspan="3" height="20">&nbsp;</td></tr><!-- linha de espaçamento -->
+
+
+         <tr >
+           <td width="5%"  height="5" > </td>
+           <td width="90%" height="5"  bgcolor="#FEE6C6"></td>
+           <td width="5%"  height="5" > </td>
+         </tr>
+
+         <tr> <!-- AVISO 1 -->
+           <td width="100%" colspan="3" height="20">&nbsp;</td></tr><!-- linha de espaçamento -->
+         <tr >
+           <td width="5%">&nbsp;</td>
+           <td width="90%">
+            <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+             <tr>
+              <td width="13%" valign="top" align="center"><img border="0" src="assets/images/dataValidade.roxo.svg" width="40" height="40"></td>
+              <td width="9%"  valign="top"    >	 <p style="margin-top: 0; margin-bottom: 0">&nbsp;</p></td>
+              <td width="77%" valign="center" >  <p style="margin-top: 0; margin-bottom: 0"><font face="Arial" color="#808080" size="3"> O desconto é válido até durar o estoque ou até a data {{validade}}</font></td>
+             </tr>
+            </table>
+           </td>
+           <td width="5%">&nbsp;</td>
+         </tr>
+
+         <tr> <!-- AVISO 2 -->
+            <td width="100%" colspan="3" height="20">&nbsp;</td></tr><!-- linha de espaçamento -->
+         <tr >
+           <td width="5%">&nbsp;</td>
+           <td width="90%">
+            <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+             <tr>
+              <td width="13%" valign="top" align="center"><img border="0" src="assets/images/reserva.roxo.svg" width="40" height="40"></td>
+              <td width="9%"  valign="top"    >	<p style="margin-top: 0; margin-bottom: 0">&nbsp;</p></td>
+              <td width="77%" valign="center" >  <p style="margin-top: 0; margin-bottom: 0"> <font face="Arial" color="#808080" size="3"> Esse cupom de desconto não gera uma reserva do produto.</font></td>
+             </tr>
+            </table>
+           </td>
+           <td width="5%">&nbsp;</td>
+         </tr>
+
+         <tr> <!-- AVISO 3 -->
+           <td width="100%" colspan="3" height="20">&nbsp;</td></tr><!-- linha de espaçamento -->
+         <tr >
+           <td width="5%">&nbsp;</td>
+           <td width="90%">
+            <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+             <tr>
+              <td width="13%" valign="top" align="center"><img border="0" src="assets/images/verifica.roxo.svg" width="40" height="40"></td>
+              <td width="9%"  valign="top"    >	<p style="margin-top: 0; margin-bottom: 0">&nbsp;</p></td>
+              <td width="77%" valign="center" >  <p style="margin-top: 0; margin-bottom: 0"> <font face="Arial" color="#808080" size="3"> Verifique com atenção se o desconto não tem nenhuma condição para ser aplicado ao produto (tela anterior)</font></td>
+             </tr>
+            </table>
+           </td>
+           <td width="5%">&nbsp;</td>
+         </tr>
+   </table><p>&nbsp;
+   <!-- FINAL da tabela eu quero -->
+
+   <!-- INICIO area de botoes -->
+   <table border="0" width="100%" cellpadding="0" style="border-collapse: collapse">
+    <tr>
+     <td width="5%">&nbsp;</td>
+     <td width="43%">
+      <button ion-button block (click)="voltar()" large outline icon-left color="laranja">
+       <ion-icon name="arrow-back"></ion-icon> Voltar </button>
+     </td>
+     <td width="4%"></td>
+     <td width="43%">
+       <button ion-button block (click)="voltar()" large outline icon-left color="laranja">
+        <ion-icon name="cart"></ion-icon> Comprei </button>
+     </td>
+     <td width="5%">&nbsp;</td>
+    </tr>
+   </table>
+   <!-- FINAL area de botoes -->
+
+
+
+</ion-content>

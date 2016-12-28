@@ -1,27 +1,35 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-title color="danger">
       Tela Debug
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <p>versao: v0011</p>
-  <p>Provider maiorID: {{cards.maiorId}}</p>
+  <p>versao: v1901</p>
   <p>saida: {{ saida }}</p>
   <p>Provider qtdeNormal: {{cards.qtdeNormal}}</p>
+  <p>Provider qtdeEstrela: {{cards.qtdeEstrela}}</p>
+  <p>Provider maiorID: {{cards.maiorId}}</p>
+  <p>maiorId Sessao={{ maiorId }}</p>
 
-  <button ion-button (click)="testeAdicionar()"                  >Ponto Inicial</button>
-  <button ion-button (click)="listarCards()"                     >Atualizar</button>
-  <button ion-button (click)="pegaDescontos()" color="danger"    >Busca Net</button>
-  <button ion-button (click)="testeBuscaNet()" color="secondary" >Busca Net Int</button>
+  <ion-row>
+      <ion-col width-33><button ion-button (click)="pegaDescontos()" block color="danger"    >Busca Net</button></ion-col>
+      <ion-col width-33><button ion-button (click)="testeBuscaNet()" block color="secondary" >Busca Net Int</button></ion-col>
+      <ion-col width-33><button ion-button (click)="listarCards()"   block                   >Atualizar</button></ion-col>
+  </ion-row>
+  <ion-row>
+      <ion-col width-33><button ion-button (click)="testeAdicionar()" block                  >Adicionar +</button></ion-col>
+      <ion-col width-33><button ion-button (click)="apagaBanco()"     block color="danger"   >Apaga Banco</button></ion-col>
+      <ion-col width-33><button ion-button (click)="listarCards()"    block                  ></button></ion-col>
+  </ion-row>
 
   <ion-list>
     <ion-list-header>Registros</ion-list-header>
     <ion-item *ngFor="let p of listaCards" >
       <ion-icon name="card" item-left  (click)="abrirDetalhes(p)"></ion-icon>
-      id={{p.id}} id_desc= {{p.id_desc}}- {{p.nome_resumo}}
+      id={{p.id}} id_desc= {{p.id_desc}}- {{p.tipo}} {{p.nome_resumo}}
       <ion-icon name="search"  item-right (click)="abrirDetalhes(p)"                ></ion-icon>
       <ion-icon name="trash"   item-right (click)="testeRemove(p.id)" color="danger"></ion-icon>
     </ion-item>

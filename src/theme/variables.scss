@@ -26,9 +26,32 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  roxo:       #373952,
+  navbarColor: #009688,
+  navbarEscuro:#32db64,
+  laranja: #F99C4C,
+  barra: (
+    base: #F99C4C,
+    contrast: #373952
+  )
 );
 
+$toolbar-background: #F99C4C;
+$toolbar-border-color: #F99C4C;
+$toolbar-text-color: #000000;
+$toolbar-active-color: #F99C4C;
+$toolbar-inactive-color: #F99C4C;
+
+$tabs-background: #32db64;
+
+$tabs-ios-tab-icon-size: 40px;
+$tabs-md-tab-icon-size: 40px;    // testar depois
+
+$tabs-ios-tab-min-height: 60px;
+$tabs-md-tab-min-height: 60px;
+
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
 // App iOS Variables
 // --------------------------------------------------

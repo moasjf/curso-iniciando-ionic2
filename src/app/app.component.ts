@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform  } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { Cards} from './../providers/cards';
 
-import { TabsPage } from '../pages/tabs/tabs';
+import { TabsPage  } from '../pages/tabs/tabs';
 
 
 @Component({
@@ -17,6 +17,7 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      console.warn('app.component.ts: rodando o construtor');
       cards.iniciaCards();
       cards.atualizaMaiorId();
       StatusBar.styleDefault();
