@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <p>cards.qtdeEstrela={{cards.qtdeEstrela}}</p>
+  <!-- p>cards.qtdeEstrela={{cards.qtdeEstrela}}</p -->
   <!-- p>cards.qtdeEstrela={{cards.qtdeEstrela}}</p>
   <p>cards.qtdeNormal={{cards.qtdeNormal}}</p -->
 
@@ -34,7 +34,7 @@
               <table border="0" width="100%" cellpadding="0"  >
                <tr>
                 <td align="center" style="border-right: 1px solid #676A83 !important;"   (click)="trocaTipo(c.id, 'normal')" ><img border="0" src="assets/images/icone.estrelaBranco.svg" width="30" height="30"></td>
-                <td align="center"                                                       (click)="testeRemove(c.id)"         ><img border="0" src="assets/images/icone.removerBranco2.svg" width="30" height="30"></td>
+                <td align="center"                                                       (click)="removeCard(c.id)"          ><img border="0" src="assets/images/icone.removerBranco2.svg" width="30" height="30"></td>
                </tr>
               </table>
              </td>

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, Platform, Events  } from 'ionic-angular';
-import { Cards} from './../../providers/cards';
-import { DescDetalhesPage  } from './../desc-detalhes/desc-detalhes';
 import { Storage } from '@ionic/storage';
+import { Cards} from './../../providers/cards';
+import { Usuario } from './../../providers/usuario';
+import { DescDetalhesPage  } from './../desc-detalhes/desc-detalhes';
+
 
 @Component({
   selector: 'page-descontos',
@@ -15,8 +17,9 @@ export class DescontosPage {
   maiorId: number;
   flagExibeDebug: number;
   flagTemNovidade: number;
+  usuarioId: number;
 
-  constructor(public navCtrl: NavController, public cards: Cards, public loadingCtrl: LoadingController, public storage: Storage, platform: Platform, public events: Events ) {
+  constructor(public navCtrl: NavController, public cards: Cards, public loadingCtrl: LoadingController, public storage: Storage, platform: Platform, public events: Events, public usuario: Usuario ) {
       this.loading = this.loadingCtrl.create({	content: 'Carregando...'      	});
       this.flagExibeDebug = 1;
       this.flagTemNovidade = 0;
@@ -35,6 +38,13 @@ export class DescontosPage {
         console.warn('desconto.ts: EVENTO cards:criado var1=', var1[0], ' var2=', var1[1]);
         this.flagTemNovidade = 1;
       });
+
+      events.subscribe('usuario:idGerado', (varU) => {
+        console.warn('desconto.ts: EVENTO usuario:idGerado id=', varU[0]);
+        this.usuarioId = varU[0];
+      });
+
+      console.warn('desconto.ts: verificando no provider usuarioId=', this.usuario.usuarioId);
   }
 
   ionViewDidLoad() {
@@ -60,7 +70,7 @@ export class DescontosPage {
                      categoria: data.rows.item(i).categoria,     nome_completo: data.rows.item(i).nome_completo, validade: data.rows.item(i).validade,
                      contato: data.rows.item(i).contato,         local_cidade: data.rows.item(i).local_cidade,   local_detalhes: data.rows.item(i).local_detalhes,
                      coordenadas: data.rows.item(i).coordenadas, observacoes: data.rows.item(i).observacoes,     img_card: data.rows.item(i).img_card,
-                     img_detalhes: data.rows.item(i).img_detalhes
+                     desconto: data.rows.item(i).desconto,       img_detalhes: data.rows.item(i).img_detalhes
                     });
             }
 
@@ -76,7 +86,7 @@ export class DescontosPage {
 
   aceitarNovidade(){
      this.flagTemNovidade = 0;
-     this.listarCards();  
+     this.listarCards();
   }
 
   ionViewWillEnter(){  // chamado sempre que a pessoa clica na aba
@@ -98,15 +108,12 @@ export class DescontosPage {
   }
 
   abrirDetalhes(objADO){
-     console.log('TO CHEGANDO AQUI');
-     this.navCtrl.push(DescDetalhesPage,{
-       mensagem: 'Mensagem passada por NavigationTestPage', cardDetalhe: objADO
-     })
+     this.navCtrl.push(DescDetalhesPage,{ mensagem: '', cardDetalhe: objADO  });
   }
 
   testeAdicionar(){
-     this.cards.adicionar({"id_desc":"10", "tipo":"normal","categoria":"calcados","nome_resumo":"Card Teste 1","nome_completo":"Moa Cal\u00e7ado","data_hoje":"","validade":"2015-12-25","contato":"011 1406","local_cidade":"campinas-sp","local_detalhes":"Shopping Parque Don Pedro, campinas-s","observacoes":"aqui vem um texto de observacoes","coordenadas":"-22.847656, -47.06423","img_card":" ","img_detalhes":""});
-     //                     di.id_desc   , di.tipo        , di.categoria         , di.nome_resumo           , di.nome_completo                 , di.data_hoje , di.validade           , di.contato         , di.local_cidade            , di.local_detalhes                                      , di.observacoes                                   , di.coordenadas                      , di.img_card , di.img_detalhes
+     //                     di.id_desc   , di.tipo        , di.desconto    , di.categoria         , di.nome_resumo           , di.nome_completo                 , di.data_hoje , di.validade           , di.contato         , di.local_cidade            , di.local_detalhes                                      , di.observacoes                                   , di.coordenadas                      , di.img_card , di.img_detalhes
+     this.cards.adicionar({"id_desc":"10", "tipo":"normal", "desconto":"33","categoria":"calcados","nome_resumo":"Card Teste 1","nome_completo":"Moa Cal\u00e7ado","data_hoje":"","validade":"2015-12-25","contato":"011 1406","local_cidade":"campinas-sp","local_detalhes":"Shopping Parque Don Pedro, campinas-s","observacoes":"aqui vem um texto de observacoes","coordenadas":"-22.847656, -47.06423","img_card":" ","img_detalhes":""});
      this.listarCards();
      this.ajustaMaiorId();
   }
@@ -135,7 +142,7 @@ export class DescontosPage {
                 categoria: data.rows.item(i).categoria,     nome_completo: data.rows.item(i).nome_completo, validade: data.rows.item(i).validade,
                 contato: data.rows.item(i).contato,         local_cidade: data.rows.item(i).local_cidade,   local_detalhes: data.rows.item(i).local_detalhes,
                 coordenadas: data.rows.item(i).coordenadas, observacoes: data.rows.item(i).observacoes,     img_card: data.rows.item(i).img_card,
-                img_detalhes: data.rows.item(i).img_detalhes
+                desconto: data.rows.item(i).desconto,       img_detalhes: data.rows.item(i).img_detalhes
                });
        }
 
@@ -161,31 +168,28 @@ export class DescontosPage {
             console.log('pegaDescontos: '+i+':', json[i].categoria, ' id=', json[i].id_desc, ' nome_resumo=', json[i].nome_resumo );
             this.listaCards.push(json[i]);
 
-            this.cards.adicionar({"id_desc":json[i].id_desc,"tipo":"normal","categoria":json[i].categoria,"nome_resumo":json[i].nome_resumo,"nome_completo":json[i].nome_completo,"data_hoje":json[i].data_hoje,"validade":json[i].validade,"contato":json[i].contato,"local_cidade":json[i].local_cidade,"local_detalhes":json[i].local_detalhes,"observacoes":json[i].observacoes,"coordenadas":json[i].coordenadas,"img_card":json[i].img_card,"img_detalhes":json[i].img_detalhes});
+            this.cards.adicionar({"id_desc":json[i].id_desc,"tipo":"normal","desconto":json[i].desconto,"categoria":json[i].categoria,"nome_resumo":json[i].nome_resumo,"nome_completo":json[i].nome_completo,"data_hoje":json[i].data_hoje,"validade":json[i].validade,"contato":json[i].contato,"local_cidade":json[i].local_cidade,"local_detalhes":json[i].local_detalhes,"observacoes":json[i].observacoes,"coordenadas":json[i].coordenadas,"img_card":json[i].img_card,"img_detalhes":json[i].img_detalhes});
         }
 
         if(res.status == 200){
           console.log('pegaDescontos: '+ res.status);
         }
 
-        console.log(JSON.stringify(json));
+        console.log(JSON.stringify(json));   // DEBUG
+        this.saida = JSON.stringify(json);   // DEBUG
         this.ajustaMaiorId();
-        this.saida = JSON.stringify(json);
         this.loading.dismiss();
      }).catch( (err) => {
         console.log('erro: ' + err);
+        this.loading.dismiss();
      });
   }
 
   trocaTipo(idTT, tipoTT){
-    //this.cards.aplicaTipo(idTT, tipoTT);
-    console.log('descontos.ts trocaTipo: chamei ');
     this.cards.aplicaTipo(idTT, tipoTT).then((data) => {
-        console.log('descontos.ts trocaTipo: idTT='+idTT+' tipoTT='+tipoTT);
         this.listarCards();
     }, (error) => {
-          console.log('descontos.ts trocaTipo: Error ', error.err);
-    });
+       console.log('descontos.ts trocaTipo: Error ', error.err);   });
   }
 
   exibeDebug(){

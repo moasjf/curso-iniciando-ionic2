@@ -13,6 +13,7 @@
   <p>Provider qtdeEstrela: {{cards.qtdeEstrela}}</p>
   <p>Provider maiorID: {{cards.maiorId}}</p>
   <p>maiorId Sessao={{ maiorId }}</p>
+  <p>usuarioId Sessao={{ usuarioId }}</p>
 
   <ion-row>
       <ion-col width-33><button ion-button (click)="pegaDescontos()" block color="danger"    >Busca Net</button></ion-col>
@@ -29,7 +30,8 @@
     <ion-list-header>Registros</ion-list-header>
     <ion-item *ngFor="let p of listaCards" >
       <ion-icon name="card" item-left  (click)="abrirDetalhes(p)"></ion-icon>
-      id={{p.id}} id_desc= {{p.id_desc}}- {{p.tipo}} {{p.nome_resumo}}
+      <p>id={{p.id}} id_desc= {{p.id_desc}}- {{p.tipo}} {{p.nome_resumo}}</p>
+      <p>desc={{p.desconto}}%  {{p.validade}}</p>
       <ion-icon name="search"  item-right (click)="abrirDetalhes(p)"                ></ion-icon>
       <ion-icon name="trash"   item-right (click)="testeRemove(p.id)" color="danger"></ion-icon>
     </ion-item>

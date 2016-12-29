@@ -13,7 +13,7 @@ export class DescEstrelaPage {
   saida: string;
   loading: any;
   maiorId: number;
-  flagExibeDebug: number;
+  flagExibeDebug: number = 0;
 
   constructor(public navCtrl: NavController, public cards: Cards, public loadingCtrl: LoadingController, public storage: Storage ) {
       this.loading = this.loadingCtrl.create({	content: 'Carregando...'      	});
@@ -36,57 +36,26 @@ export class DescEstrelaPage {
          });
          that.cards.atualizaQtde('estrela');
       }, 2000);
-
-      //this.storage.get('sessao_maiorId').then((val) => {
-      //   this.maiorId = val; console.log('sessao_maiorIr=', this.maiorId);
-      //});
   }
 
   ionViewWillEnter(){  // chamado sempre que a pessoa clica na aba
       this.listarCards();
   }
 
-  testePegaMaiorIdCards(){
-     this.saida = this.cards.maiorId.toString();
-  }
-
-  ajustaMaiorId(){
-     if(this.cards.maiorId > this.maiorId ){
-        this.maiorId = this.cards.maiorId;
-        this.storage.set('sessao_maiorId', this.maiorId);
-        console.log('desc-estrelas.ts ajustaMaiorId: SET sessao_maiorId='+this.maiorId);
-     }else{
-        console.log('desc-estrelas.ts ajustaMaiorId: sessao_maiorId='+this.maiorId);
-     }
-  }
-
 
   abrirDetalhes(objADO){
-     console.log('TO CHEGANDO AQUI');
-     this.navCtrl.push(DescDetalhesPage,{
-       mensagem: 'Mensagem passada por NavigationTestPage', cardDetalhe: objADO
-     })
+     this.navCtrl.push(DescDetalhesPage,{ mensagem: '', cardDetalhe: objADO });
   }
 
-  testeAdicionar(){
-     this.cards.adicionar({"id_desc":"10","categoria":"calcados","nome_resumo":"Card Teste 1","nome_completo":"Moa Cal\u00e7ado","data_hoje":"","validade":"2015-12-25","contato":"011 1406","local_cidade":"campinas-sp","local_detalhes":"Shopping Parque Don Pedro, campinas-s","observacoes":"aqui vem um texto de observacoes","coordenadas":"-22.847656, -47.06423","img_card":" ","img_detalhes":""});
-     //                     di.id_desc   , di.categoria         , di.nome_resumo           , di.nome_completo                 , di.data_hoje , di.validade           , di.contato         , di.local_cidade            , di.local_detalhes                                      , di.observacoes                                   , di.coordenadas                      , di.img_card , di.img_detalhes
-     this.listarCards();
-     this.ajustaMaiorId();
-  }
 
-  testeAtualizaMaiorId(){
-     this.cards.atualizaMaiorId();
-     this.ajustaMaiorId();
-  }
-
-  testeRemove(idTR){
+  removeCard(idTR){
     this.cards.remover(idTR);
     this.listarCards();
   }
 
+
   listarCards(){
-    //this.loading.present();
+    //this.loading.present(); // desativado pois possue uma falha nessa versao do ionic
     console.log("desc-estrelas.ts listarCards: chamei a funcao" );
     this.cards.retorna('estrela').then((data) => {
        console.log("desc-estrelas.ts listarCards tam: ", data.rows.length );
@@ -99,10 +68,8 @@ export class DescEstrelaPage {
                 categoria: data.rows.item(i).categoria,       nome_completo: data.rows.item(i).nome_completo, validade: data.rows.item(i).validade,
                 contato: data.rows.item(i).contato,           local_cidade: data.rows.item(i).local_cidade,   local_detalhes: data.rows.item(i).local_detalhes,
                 coordenadas: data.rows.item(i).coordenadas,   observacoes: data.rows.item(i).observacoes,     img_card: data.rows.item(i).img_card,
-                img_detalhes: data.rows.item(i).img_detalhes, tipo: data.rows.item(i).tipo
+                img_detalhes: data.rows.item(i).img_detalhes, tipo: data.rows.item(i).tipo,                   desconto: data.rows.item(i).desconto
                });
-           //di.id_desc, di.categoria, di.nome_resumo, di.nome_completo, di.data_hoje, di.validade, di.contato, di.local_cidade,
-           // di.local_detalhes, di.observacoes, di.coordenadas, di.img_card, di.img_detalhes
        }
 
        // console.log("listaCards: ", JSON.stringify(this.listaCards) );
@@ -112,16 +79,14 @@ export class DescEstrelaPage {
           console.log('desc-estrelas.ts listarCards: Error ', error.err);
           //this.loading.dismiss();
     });
-
-    this.ajustaMaiorId();
   }
-
 
 
   trocaTipo(idTT, tipoTT){
     this.cards.aplicaTipo(idTT, tipoTT);
     this.listarCards();
   }
+
 
   exibeDebug(){
     if(this.flagExibeDebug==0){ this.flagExibeDebug = 1;
