@@ -100,25 +100,28 @@ export class Cards {
       return this.db.executeSql("SELECT * FROM cards "+trecho+" ORDER BY id DESC ", []);
   }
 
+
   public aplicaTipo(idAT, tipoAT){
        console.log("CARDS: foi chamado funcao aplicaTipo() ");
       return this.db.executeSql("UPDATE cards SET tipo ='"+tipoAT+"' WHERE id = "+idAT, []);
   }
 
-  buscaAtualizacoes(qtde:string){
-      return this.http.get('http://www.moacir.net/meu10conto/Descontos.php?acao=dadosDescontosJSON&categoria=calcados&ult_reg=0&local=campinas-sp').toPromise();
+
+  buscaAtualizacoes(qtde:string, id:number, ultRegistro:number){  // http://www.moacir.net/meu10conto/Descontos.php?acao=dadosDescontosJSON&ult_reg=10&local=campinas-sp&cod_usuario=07564838'
+      console.warn('cards buscaAtualizacoes: qtde='+ qtde+' id='+id+' ultRegistro='+ultRegistro );
+      return this.http.get('http://www.moacir.net/meu10conto/Descontos.php?acao=dadosDescontosJSON&ult_reg='+ultRegistro+'&local=campinas-sp&cod_usuario='+id).toPromise();
       //return this.http.get('http://www.moacir.net/meu10conto/Descontos.php?acao=dadosDescontosJSON&categoria=calcados&ult_reg=0&local=campinas-sp').map(res => res.json()).toPromise();
   }
 
   buscaInternet(){
     this.buscandoInternet = 1;
-    this.buscaAtualizacoes('2')
+    this.buscaAtualizacoes('2',0, 0)
      .then( (res) => {
         let json = res.json();
 
         for (let i = 0; i < json.length; i++) {
             console.log('pegaDescontos: '+i+':', json[i].categoria, ' id=', json[i].id_desc, ' nome_resumo=', json[i].nome_resumo );
-            this.adicionar({"id_desc":json[i].id_desc,"categoria":json[i].categoria, "desconto":json[i].desconto,"nome_resumo":json[i].nome_resumo,"nome_completo":json[i].nome_completo,"data_hoje":json[i].data_hoje,"validade":json[i].validade,"contato":json[i].contato,"local_cidade":json[i].local_cidade,"local_detalhes":json[i].local_detalhes,"observacoes":json[i].observacoes,"coordenadas":json[i].coordenadas,"img_card":json[i].img_card,"img_detalhes":json[i].img_detalhes});
+            this.adicionar({"id_desc":json[i].id_desc,"categoria":json[i].categoria, "desconto":json[i].valor,"nome_resumo":json[i].nome_resumo,"nome_completo":json[i].nome_completo,"data_hoje":json[i].data_hoje,"validade":json[i].validade,"contato":json[i].contato,"local_cidade":json[i].local_cidade,"local_detalhes":json[i].local_detalhes,"observacoes":json[i].observacoes,"coordenadas":json[i].coordenadas,"img_card":json[i].img_card,"img_detalhes":json[i].img_detalhes});
         }
 
         console.log(JSON.stringify(json));

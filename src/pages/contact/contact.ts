@@ -14,6 +14,8 @@ export class ContactPage {
   loading: any;
   maiorId: number;
   usuarioId: number;
+  logBusca:string;
+  log: Array<Object> = [];
 
   constructor(public navCtrl: NavController, public cards: Cards, public storage: Storage, public events: Events) {
 
@@ -21,6 +23,7 @@ export class ContactPage {
         console.log('Constructor: iniciando busca cards');    // DEBUG
         console.log("listarCards tam: ", data.rows.length );  // DEBUG
         this.listaCards = [];
+        this.log        = [];
 
         for(var i = 0; i < data.rows.length; i++) {
             console.log(".."+data.rows.item(i).id_desc+": "+data.rows.item(i).nome_resumo);
@@ -43,11 +46,16 @@ export class ContactPage {
         if(val != null){  this.usuarioId = val; }
         console.warn('contact.ts: PEGUEI localStorage usuarioId=', this.usuarioId);
      });
+
+     //setInterval(this.pegaDescontos, 5000);
+     setInterval(() => { this.pegaDescontos(); }, 5000);
+
+     //this.pegaDescontos();
   }
 
 
   ionViewDidLoad() {
-    console.log('Contact Page: iniciando (ionViewDidLoad)');
+    console.log('Debug Page: iniciando (ionViewDidLoad)');
     this.cards.atualizaMaiorId();
     let that = this; // resolver uma questão de escopo do SetTimeout
     setTimeout(function(){             console.log("contact.ts--------------INICIO setTimeou ");
@@ -64,6 +72,42 @@ export class ContactPage {
   ionViewWillEnter(){  // chamado sempre que a pessoa clica na aba
       this.listarCards();
   }
+
+  pegaDescontos(){
+    console.warn('contact.ts pegaDesconto começou a rodar [usuarioId='+ this.usuarioId+']');
+
+    let data = new Date();             let hora    = data.getHours();          // 0-23
+    let min     = data.getMinutes();   let seg     = data.getSeconds();
+    let agora: string;                    agora    = hora+':'+min+':'+seg;
+
+    //this.log.push({msg: '', hora: agora, id: this.usuarioId, maiorId: this.maiorId, status: '' });
+
+    this.cards.buscandoInternet = 1;
+    this.cards.buscaAtualizacoes('2', this.usuarioId, this.maiorId)
+     .then( (res) => {
+        let json = res.json();
+
+        for (let i = 0; i < json.length; i++) {
+            console.log('pegaDescontos: '+i+':', json[i].categoria, ' id=', json[i].id_desc, ' nome_resumo=', json[i].nome_resumo );
+            this.listaCards.push(json[i]);
+
+            this.cards.adicionar({"id_desc":json[i].id_desc,"tipo":"normal","desconto":json[i].desconto,"categoria":json[i].categoria,"nome_resumo":json[i].nome_resumo,"nome_completo":json[i].nome_completo,"data_hoje":json[i].data_hoje,"validade":json[i].validade,"contato":json[i].contato,"local_cidade":json[i].local_cidade,"local_detalhes":json[i].local_detalhes,"observacoes":json[i].observacoes,"coordenadas":json[i].coordenadas,"img_card":json[i].img_card,"img_detalhes":json[i].img_detalhes});
+        }
+
+        if(res.status == 200){ console.log('pegaDescontos: '+ res.status); }
+
+        console.log(JSON.stringify(json));
+
+        this.log.push({msg: '', hora: agora, id: this.usuarioId, maiorId: this.maiorId, status: 'OK' });
+
+        this.saida = JSON.stringify(json);
+        this.cards.buscandoInternet = 0;
+     }).catch( (err) => {
+        console.log('erro: ' + err); //this.loading.dismiss();
+        this.cards.buscandoInternet = 0;
+        this.log.push({msg: '', hora: agora, id: this.usuarioId, maiorId: this.maiorId, status: 'FALHOU' });
+     });
+  }//fim de pegaDescontos
 
 
   abrirDetalhes(objADO){
@@ -123,35 +167,6 @@ export class ContactPage {
      this.cards.buscaInternet();
   }
 
-
-  pegaDescontos(){
-    //this.loading.present();
-    this.cards.buscandoInternet = 1;
-    this.cards.buscaAtualizacoes('2')
-     .then( (res) => {
-        let json = res.json();
-
-        for (let i = 0; i < json.length; i++) {
-            console.log('pegaDescontos: '+i+':', json[i].categoria, ' id=', json[i].id_desc, ' nome_resumo=', json[i].nome_resumo );
-            this.listaCards.push(json[i]);
-
-            this.cards.adicionar({"id_desc":json[i].id_desc,"tipo":"normal","desconto":json[i].desconto,"categoria":json[i].categoria,"nome_resumo":json[i].nome_resumo,"nome_completo":json[i].nome_completo,"data_hoje":json[i].data_hoje,"validade":json[i].validade,"contato":json[i].contato,"local_cidade":json[i].local_cidade,"local_detalhes":json[i].local_detalhes,"observacoes":json[i].observacoes,"coordenadas":json[i].coordenadas,"img_card":json[i].img_card,"img_detalhes":json[i].img_detalhes});
-        }
-
-        if(res.status == 200){
-          console.log('pegaDescontos: '+ res.status);
-        }
-
-        console.log(JSON.stringify(json));
-
-        this.saida = JSON.stringify(json);
-        //this.loading.dismiss();
-        this.cards.buscandoInternet = 0;
-     }).catch( (err) => {
-        console.log('erro: ' + err); //this.loading.dismiss();
-        this.cards.buscandoInternet = 0;
-     });
-  }
 
 
   apagaBanco(){

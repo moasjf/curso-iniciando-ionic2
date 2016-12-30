@@ -43,4 +43,9 @@
   <div *ngIf="cards.buscandoInternet">
          <p>Indo na internet buscar mais </p>
   </div>
+
+  <div>
+   <p>logBusca:</p>
+   <p *ngFor="let l of log" >[{{l.hora}}] {{ l.id }} maiorId={{l.maiorId}} status={{l.status}} </p>
+  </div>
 </ion-content>

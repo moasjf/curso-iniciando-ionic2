@@ -160,7 +160,7 @@ export class DescontosPage {
 
   pegaDescontos(){
     this.loading.present();
-    this.cards.buscaAtualizacoes('2')
+    this.cards.buscaAtualizacoes('2', this.usuarioId, this.maiorId)
      .then( (res) => {
         let json = res.json();
 
